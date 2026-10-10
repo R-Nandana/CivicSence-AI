@@ -61,6 +61,14 @@ class ComplaintResponse(BaseModel):
     entities: List[Dict[str, Any]]
     created_at: str
     updated_at: str
+    geo_lat: Optional[float] = None
+    geo_lon: Optional[float] = None
+    evidence_status: Optional[str] = None
+    evidence_assessment: Optional[str] = None
+    evidence_verified_by: Optional[str] = None
+
+    class Config:
+        extra = "allow"
 
 
 # Officer / Admin Schemas
@@ -77,8 +85,8 @@ class ValidationFeedbackRequest(BaseModel):
 
 # Evidence Verification Schemas
 class EvidenceReviewRequest(BaseModel):
-    officer_review_status: str = Field(..., pattern="^(CONFIRMED|OVERRIDDEN)$")
-    corrected_assessment: Optional[str] = Field(None, pattern="^(SUPPORTS_COMPLAINT|POTENTIAL_CONFLICT|INCONCLUSIVE|REQUIRES_HUMAN_REVIEW)$")
+    officer_review_status: str = Field(..., pattern="^(CONFIRMED|OVERRIDDEN|VERIFIED_GENUINE|FLAGGED_FALSE|INCONCLUSIVE)$")
+    corrected_assessment: Optional[str] = Field(None, pattern="^(SUPPORTS_COMPLAINT|POTENTIAL_CONFLICT|INCONCLUSIVE|REQUIRES_HUMAN_REVIEW|VERIFIED_GENUINE|FLAGGED_FALSE)$")
     officer_notes: Optional[str] = None
 
 

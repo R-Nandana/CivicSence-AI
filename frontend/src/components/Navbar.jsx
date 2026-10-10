@@ -47,17 +47,48 @@ export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiv
 
         {/* Role-Based Portal Navigation Tabs */}
         {user?.role === 'citizen' && (
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            background: 'rgba(79, 70, 229, 0.12)',
-            padding: '6px 16px',
-            borderRadius: '10px',
-            border: '1px solid rgba(79, 70, 229, 0.3)'
-          }}>
-            <UserCheck size={16} color="#818cf8" />
-            <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#fff' }}>Citizen Complaint Portal</span>
+          <div style={{ display: 'flex', gap: '6px', background: 'rgba(255,255,255,0.04)', padding: '4px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+            <button
+              className="btn"
+              style={{
+                padding: '6px 14px',
+                fontSize: '0.82rem',
+                borderRadius: '8px',
+                background: (!activeTab || activeTab === 'complaints') ? '#4f46e5' : 'transparent',
+                color: (!activeTab || activeTab === 'complaints') ? '#fff' : 'var(--text-muted)'
+              }}
+              onClick={() => setActiveTab('complaints')}
+            >
+              <UserCheck size={15} /> Citizen Complaint Portal
+            </button>
+
+            <button
+              className="btn"
+              style={{
+                padding: '6px 14px',
+                fontSize: '0.82rem',
+                borderRadius: '8px',
+                background: activeTab === 'multilingual' ? 'rgba(14, 165, 233, 0.2)' : 'transparent',
+                color: activeTab === 'multilingual' ? '#38bdf8' : 'var(--text-muted)'
+              }}
+              onClick={() => setActiveTab('multilingual')}
+            >
+              Universal MT
+            </button>
+
+            <button
+              className="btn"
+              style={{
+                padding: '6px 14px',
+                fontSize: '0.82rem',
+                borderRadius: '8px',
+                background: activeTab === 'qachat' ? 'rgba(79, 70, 229, 0.2)' : 'transparent',
+                color: activeTab === 'qachat' ? '#818cf8' : 'var(--text-muted)'
+              }}
+              onClick={() => setActiveTab('qachat')}
+            >
+              QA & Chatbot
+            </button>
           </div>
         )}
 
@@ -90,32 +121,7 @@ export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiv
             >
               <Activity size={15} /> EDA & Model Metrics
             </button>
-            <button
-              className="btn"
-              style={{
-                padding: '6px 14px',
-                fontSize: '0.82rem',
-                borderRadius: '8px',
-                background: activeTab === 'multilingual' ? 'rgba(14, 165, 233, 0.2)' : 'transparent',
-                color: activeTab === 'multilingual' ? '#38bdf8' : 'var(--text-muted)'
-              }}
-              onClick={() => setActiveTab('multilingual')}
-            >
-               Universal MT
-            </button>
-            <button
-              className="btn"
-              style={{
-                padding: '6px 14px',
-                fontSize: '0.82rem',
-                borderRadius: '8px',
-                background: activeTab === 'qachat' ? 'rgba(79, 70, 229, 0.2)' : 'transparent',
-                color: activeTab === 'qachat' ? '#818cf8' : 'var(--text-muted)'
-              }}
-              onClick={() => setActiveTab('qachat')}
-            >
-               QA & Chatbot
-            </button>
+
             <button
               className="btn"
               style={{
@@ -127,7 +133,7 @@ export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiv
               }}
               onClick={() => setActiveTab('marketbasket')}
             >
-               Market Basket
+              Market Basket
             </button>
           </div>
         )}

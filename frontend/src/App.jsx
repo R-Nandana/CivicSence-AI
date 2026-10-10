@@ -65,6 +65,7 @@ export default function App() {
           setClassicTab('officer');
         } else {
           setActiveScreen('citizen-dashboard');
+          setClassicTab('complaints');
         }
       } catch (e) {
         localStorage.removeItem('civicsense_user');
@@ -81,6 +82,7 @@ export default function App() {
       setClassicTab('officer');
     } else {
       setActiveScreen('citizen-dashboard');
+      setClassicTab('complaints');
     }
   };
 
@@ -89,7 +91,7 @@ export default function App() {
     localStorage.removeItem('civicsense_user');
     setUser(null);
     setActiveScreen('citizen-dashboard');
-    setClassicTab('officer');
+    setClassicTab('complaints');
   };
 
   const handleSwitchRole = (newRole) => {
@@ -110,6 +112,7 @@ export default function App() {
       setClassicTab('officer');
     } else {
       setActiveScreen('citizen-dashboard');
+      setClassicTab('complaints');
     }
   };
 
@@ -140,19 +143,23 @@ export default function App() {
   if (viewMode === 'classic') {
     const renderClassicContent = () => {
       if (user.role === 'citizen') {
-        return <CitizenPortal user={user} onOpenAuth={handleOpenAuth} />;
+        switch (classicTab) {
+          case 'multilingual':
+            return <MultilingualPage />;
+          case 'qachat':
+            return <QAChatPage />;
+          case 'complaints':
+          default:
+            return <CitizenPortal user={user} onOpenAuth={handleOpenAuth} />;
+        }
       }
 
-      // Officer Tabs
+      // Officer Tabs: strictly Officer Control Center, EDA, Market Basket
       switch (classicTab) {
         case 'officer':
           return <OfficerPortal user={user} onOpenAuth={handleOpenAuth} />;
         case 'eda':
           return <EdaView />;
-        case 'multilingual':
-          return <MultilingualPage />;
-        case 'qachat':
-          return <QAChatPage />;
         case 'marketbasket':
           return <MarketBasketPage />;
         default:

@@ -256,10 +256,13 @@ export const api = {
   },
 
   // Computer Vision & Evidence Verification
-  async uploadImageEvidence(complaintId, file) {
+  async uploadImageEvidence(complaintId, file, geoLat = null, geoLon = null, geoAddress = '') {
     const formData = new FormData();
     formData.append('complaint_id', complaintId);
     formData.append('file', file);
+    if (geoLat !== null && geoLat !== undefined) formData.append('geo_lat', geoLat);
+    if (geoLon !== null && geoLon !== undefined) formData.append('geo_lon', geoLon);
+    if (geoAddress) formData.append('geo_address', geoAddress);
     const res = await fetch(`${API_BASE}/evidence/upload-image`, {
       method: 'POST',
       headers: { ...getAuthHeaders() },
@@ -268,10 +271,13 @@ export const api = {
     return await handleResponse(res);
   },
 
-  async uploadVideoEvidence(complaintId, file) {
+  async uploadVideoEvidence(complaintId, file, geoLat = null, geoLon = null, geoAddress = '') {
     const formData = new FormData();
     formData.append('complaint_id', complaintId);
     formData.append('file', file);
+    if (geoLat !== null && geoLat !== undefined) formData.append('geo_lat', geoLat);
+    if (geoLon !== null && geoLon !== undefined) formData.append('geo_lon', geoLon);
+    if (geoAddress) formData.append('geo_address', geoAddress);
     const res = await fetch(`${API_BASE}/evidence/upload-video`, {
       method: 'POST',
       headers: { ...getAuthHeaders() },

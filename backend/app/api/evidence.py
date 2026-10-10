@@ -30,6 +30,9 @@ router = APIRouter(prefix="/evidence", tags=["Computer Vision & Evidence Verific
 async def upload_image_evidence(
     complaint_id: str = Form(...),
     file: UploadFile = File(...),
+    geo_lat: Optional[float] = Form(None),
+    geo_lon: Optional[float] = Form(None),
+    geo_address: Optional[str] = Form(None),
     current_user: dict = Depends(get_current_user)
 ):
     """
@@ -96,6 +99,25 @@ async def upload_image_evidence(
         officer_review_status="PENDING_REVIEW"
     )
 
+    if geo_lat is not None and geo_lon is not None:
+        evidence_doc["geo_lat"] = geo_lat
+        evidence_doc["geo_lon"] = geo_lon
+        evidence_doc["geo_address"] = geo_address or f"Lat: {geo_lat:.5f}, Lon: {geo_lon:.5f}"
+
+    complaint_update = {
+        "has_evidence": True,
+        "evidence_id": evidence_id,
+        "evidence_type": "image",
+        "evidence_assessment": evidence_doc["evidence_assessment"],
+        "evidence_file_path": evidence_doc["file_path"],
+        "evidence_status": "PENDING_REVIEW"
+    }
+    if geo_lat is not None and geo_lon is not None:
+        complaint_update["geo_lat"] = geo_lat
+        complaint_update["geo_lon"] = geo_lon
+        complaint_update["geo_address"] = evidence_doc.get("geo_address", "")
+    complaints_col.update_one({"complaint_id": complaint_id}, {"$set": complaint_update})
+
     evidence_col = get_collection("evidence")
     evidence_col.insert_one(evidence_doc)
 
@@ -106,10 +128,10 @@ async def upload_image_evidence(
         complaint_id=complaint_id,
         event_type="EVIDENCE_UPLOAD",
         title="Citizen Uploaded Image Evidence",
-        description=f"Evidence {evidence_id} assessed as {evidence_doc['evidence_assessment']} ({evidence_doc['confidence_score']*100:.1f}% confidence for {evidence_doc['top_predicted_category']}).",
+        description=f"Evidence {evidence_id} assessed as {evidence_doc['evidence_assessment']} ({evidence_doc['confidence_score']*100:.1f}% confidence for {evidence_doc['top_predicted_category']})." + (f" Geo-tagged at {geo_lat:.4f}, {geo_lon:.4f}." if geo_lat else ""),
         actor_role=current_user.get("role", "CITIZEN").upper(),
         actor_name=current_user.get("name", "Citizen"),
-        metadata={"evidence_id": evidence_id, "assessment": evidence_doc["evidence_assessment"]}
+        metadata={"evidence_id": evidence_id, "assessment": evidence_doc["evidence_assessment"], "geo_lat": geo_lat, "geo_lon": geo_lon}
     ))
 
     return {
@@ -123,6 +145,9 @@ async def upload_image_evidence(
 async def upload_video_evidence(
     complaint_id: str = Form(...),
     file: UploadFile = File(...),
+    geo_lat: Optional[float] = Form(None),
+    geo_lon: Optional[float] = Form(None),
+    geo_address: Optional[str] = Form(None),
     current_user: dict = Depends(get_current_user)
 ):
     """
@@ -178,6 +203,25 @@ async def upload_video_evidence(
         frame_findings=analysis.get("frame_findings", []),
         officer_review_status="PENDING_REVIEW"
     )
+
+    if geo_lat is not None and geo_lon is not None:
+        evidence_doc["geo_lat"] = geo_lat
+        evidence_doc["geo_lon"] = geo_lon
+        evidence_doc["geo_address"] = geo_address or f"Lat: {geo_lat:.5f}, Lon: {geo_lon:.5f}"
+
+    complaint_update = {
+        "has_evidence": True,
+        "evidence_id": evidence_id,
+        "evidence_type": "video",
+        "evidence_assessment": evidence_doc["evidence_assessment"],
+        "evidence_file_path": evidence_doc["file_path"],
+        "evidence_status": "PENDING_REVIEW"
+    }
+    if geo_lat is not None and geo_lon is not None:
+        complaint_update["geo_lat"] = geo_lat
+        complaint_update["geo_lon"] = geo_lon
+        complaint_update["geo_address"] = evidence_doc.get("geo_address", "")
+    complaints_col.update_one({"complaint_id": complaint_id}, {"$set": complaint_update})
 
     evidence_col = get_collection("evidence")
     evidence_col.insert_one(evidence_doc)
@@ -241,6 +285,17 @@ def review_evidence(
     }
     evidence_col.update_one({"evidence_id": evidence_id}, {"$set": update_data})
 
+    # Update parent complaint for instant dashboard reflection
+    complaints_col = get_collection("complaints")
+    complaints_col.update_one(
+        {"complaint_id": ev["complaint_id"]},
+        {"$set": {
+            "evidence_status": req.officer_review_status,
+            "evidence_assessment": new_assessment,
+            "evidence_verified_by": officer.get("name", officer.get("email"))
+        }}
+    )
+
     # Record Timeline Event
     timeline_col = get_collection("issue_timeline")
     timeline_col.insert_one(create_timeline_event_doc(
@@ -248,7 +303,7 @@ def review_evidence(
         complaint_id=ev["complaint_id"],
         event_type="OFFICER_VALIDATION",
         title=f"Officer Evidence Assessment Review: {req.officer_review_status}",
-        description=f"Evidence {evidence_id} assessment set to '{new_assessment}'. Notes: {req.officer_notes or 'No notes'}",
+        description=f"Evidence {evidence_id} assessed as '{new_assessment}'. Status: {req.officer_review_status}. Notes: {req.officer_notes or 'No notes'}",
         actor_role="OFFICER",
         actor_name=officer.get("name", "Municipal Officer"),
         metadata={"evidence_id": evidence_id, "status": req.officer_review_status, "assessment": new_assessment}
@@ -257,5 +312,6 @@ def review_evidence(
     return {
         "message": "Evidence review successfully updated.",
         "evidence_id": evidence_id,
-        "new_assessment": new_assessment
+        "new_assessment": new_assessment,
+        "officer_review_status": req.officer_review_status
     }
