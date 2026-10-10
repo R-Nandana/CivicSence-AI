@@ -78,16 +78,16 @@ export default function LoginPage({ onLoginSuccess, onExploreEda }) {
 
       {/* LEFT PANEL: CivicSense Branding & Smart City Visual (Split Screen) */}
       <div style={{
-        flex: 1.1,
+        flex: 1.15,
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: '50px 60px',
-        backgroundImage: `linear-gradient(135deg, rgba(9, 13, 22, 0.88) 0%, rgba(13, 21, 39, 0.82) 50%, rgba(15, 23, 42, 0.92) 100%), url('/civicsense_city_hero.jpg')`,
+        padding: '40px 50px',
+        backgroundImage: `linear-gradient(135deg, rgba(9, 13, 22, 0.75) 0%, rgba(13, 21, 39, 0.65) 50%, rgba(15, 23, 42, 0.85) 100%), url('/civicsense_city_hero.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        borderRight: '1px solid rgba(255, 255, 255, 0.1)'
+        borderRight: '1px solid rgba(255, 255, 255, 0.12)'
       }}>
         {/* Top Brand Tag */}
         <div>
@@ -95,12 +95,12 @@ export default function LoginPage({ onLoginSuccess, onExploreEda }) {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '12px',
-            background: 'rgba(255, 255, 255, 0.08)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
+            background: 'rgba(9, 13, 22, 0.6)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(56, 189, 248, 0.3)',
             padding: '8px 18px',
             borderRadius: '9999px',
-            marginBottom: '28px'
+            marginBottom: '20px'
           }}>
             <div style={{
               width: '32px',
@@ -113,13 +113,13 @@ export default function LoginPage({ onLoginSuccess, onExploreEda }) {
               color: 'white',
               fontWeight: 800,
               fontSize: '1.05rem',
-              boxShadow: '0 4px 12px rgba(37, 99, 235, 0.4)'
+              boxShadow: '0 4px 12px rgba(37, 99, 235, 0.5)'
             }}>
               C
             </div>
             <span style={{ fontSize: '1.1rem', fontWeight: 800, color: '#fff' }}>CivicSense AI</span>
             <span style={{
-              background: 'rgba(37, 99, 235, 0.3)',
+              background: 'rgba(37, 99, 235, 0.35)',
               color: '#93c5fd',
               fontSize: '0.65rem',
               fontWeight: 800,
@@ -132,51 +132,99 @@ export default function LoginPage({ onLoginSuccess, onExploreEda }) {
           </div>
 
           <h1 style={{
-            fontSize: '2.7rem',
+            fontSize: '2.5rem',
             fontWeight: 800,
             lineHeight: 1.18,
             color: '#fff',
             letterSpacing: '-0.03em',
-            marginBottom: '18px',
+            marginBottom: '14px',
             maxWidth: '560px'
           }}>
-            NLP-Based Civic Complaint Intelligence & Urban Issue Monitoring
+            NLP-Based Civic Complaint Intelligence & Urban Monitoring
           </h1>
 
           <p style={{
             color: '#cbd5e1',
-            fontSize: '1.02rem',
-            lineHeight: 1.6,
+            fontSize: '0.98rem',
+            lineHeight: 1.55,
             maxWidth: '520px',
-            marginBottom: '32px'
+            marginBottom: '22px'
           }}>
             A production-style academic platform integrating multiclass text classification,
             domain NER, speech acoustics, cross-lingual translation, computer vision evidence
             verification, related issue evolution tracking, and resolution monitoring.
           </p>
 
-          {/* Key Metric Pills */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '14px', maxWidth: '480px' }}>
+          {/* PROMINENT PICTURE CARD IN LOGIN PAGE */}
+          <div style={{
+            marginBottom: '24px',
+            maxWidth: '520px',
+            borderRadius: '16px',
+            overflow: 'hidden',
+            border: '2px solid rgba(56, 189, 248, 0.35)',
+            boxShadow: '0 16px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(13, 148, 136, 0.3)',
+            position: 'relative'
+          }}>
+            <img 
+              src="/civicsense_city_hero.jpg" 
+              alt="CivicSense Urban Surveillance & City Monitoring" 
+              style={{
+                width: '100%',
+                height: '210px',
+                objectFit: 'cover',
+                display: 'block'
+              }} 
+            />
             <div style={{
-              padding: '14px 18px',
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              background: 'linear-gradient(180deg, transparent 0%, rgba(9, 13, 22, 0.95) 100%)',
+              padding: '12px 18px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#38bdf8' }}>
+                🏙️ Smart Urban Surveillance & Infrastructure Monitoring
+              </span>
+              <span style={{
+                fontSize: '0.68rem',
+                color: '#34d399',
+                background: 'rgba(16, 185, 129, 0.2)',
+                border: '1px solid rgba(16, 185, 129, 0.4)',
+                padding: '2px 8px',
+                borderRadius: '6px',
+                fontWeight: 700
+              }}>
+                Live City Feed
+              </span>
+            </div>
+          </div>
+
+          {/* Key Metric Pills */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', maxWidth: '520px' }}>
+            <div style={{
+              padding: '12px 16px',
               borderRadius: '12px',
-              background: 'rgba(15, 23, 42, 0.75)',
+              background: 'rgba(15, 23, 42, 0.8)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               backdropFilter: 'blur(8px)'
             }}>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#60a5fa' }}>1,044 Records</div>
-              <div style={{ fontSize: '0.78rem', color: '#94a3b8' }}>NYC 311 Verified Civic Dataset</div>
+              <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#60a5fa' }}>1,044 Records</div>
+              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>NYC 311 Verified Civic Dataset</div>
             </div>
 
             <div style={{
-              padding: '14px 18px',
+              padding: '12px 16px',
               borderRadius: '12px',
-              background: 'rgba(15, 23, 42, 0.75)',
+              background: 'rgba(15, 23, 42, 0.8)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               backdropFilter: 'blur(8px)'
             }}>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#34d399' }}>8 Categories</div>
-              <div style={{ fontSize: '0.78rem', color: '#94a3b8' }}>TF-IDF + Softmax Logistic Regression</div>
+              <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#34d399' }}>8 Categories</div>
+              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>TF-IDF + Softmax Logistic Regression</div>
             </div>
 
             <div style={{

@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import Sidebar from './components/Sidebar';
-import TopNav from './components/TopNav';
+
+// 1st Classic UI Components
+import Navbar from './components/Navbar';
+import CitizenPortal from './pages/CitizenPortal';
+import OfficerPortal from './pages/OfficerPortal';
+import EdaView from './pages/EdaView';
+import MultilingualPage from './pages/MultilingualPage';
+import MarketBasketPage from './pages/MarketBasketPage';
+import QAChatPage from './pages/QAChatPage';
+import AuthModal from './pages/AuthModal';
+
+// Authentication & Split-Screen Login Page
 import LoginPage from './pages/LoginPage';
 
-// Screen Components
+// 21-Screen Intelligence Suite Components
+import Sidebar from './components/Sidebar';
+import TopNav from './components/TopNav';
 import CitizenDashboardScreen from './screens/CitizenDashboardScreen';
 import TextSubmissionScreen from './screens/TextSubmissionScreen';
 import TextClassificationScreen from './screens/TextClassificationScreen';
@@ -25,8 +37,20 @@ import EdaDashboardScreen from './screens/EdaDashboardScreen';
 
 export default function App() {
   const [user, setUser] = useState(null);
+  
+  // View Mode: 'classic' (User's 1st UI) vs 'suite' (21-Screen Intelligence Suite)
+  const [viewMode, setViewMode] = useState('classic');
+  
+  // 1st UI Navigation Tab
+  const [classicTab, setClassicTab] = useState('officer');
+  
+  // 21-Screen Suite Active Screen
   const [activeScreen, setActiveScreen] = useState('citizen-dashboard');
   const [selectedComplaintId, setSelectedComplaintId] = useState(null);
+  
+  // Auth Modal State
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authModalRole, setAuthModalRole] = useState('citizen');
 
   useEffect(() => {
     // Check local storage for authenticated session
@@ -38,6 +62,7 @@ export default function App() {
         setUser(parsed);
         if (parsed.role === 'officer') {
           setActiveScreen('admin-dashboard');
+          setClassicTab('officer');
         } else {
           setActiveScreen('citizen-dashboard');
         }
@@ -50,8 +75,10 @@ export default function App() {
 
   const handleLoginSuccess = (loggedInUser) => {
     setUser(loggedInUser);
+    setAuthModalOpen(false);
     if (loggedInUser.role === 'officer') {
       setActiveScreen('admin-dashboard');
+      setClassicTab('officer');
     } else {
       setActiveScreen('citizen-dashboard');
     }
@@ -62,6 +89,7 @@ export default function App() {
     localStorage.removeItem('civicsense_user');
     setUser(null);
     setActiveScreen('citizen-dashboard');
+    setClassicTab('officer');
   };
 
   const handleSwitchRole = (newRole) => {
@@ -76,12 +104,18 @@ export default function App() {
     localStorage.setItem('civicsense_user', JSON.stringify(updated));
     if (newRole === 'officer') {
       setActiveScreen('admin-dashboard');
+      setClassicTab('officer');
     } else {
       setActiveScreen('citizen-dashboard');
     }
   };
 
-  // If user is not logged in, render the Split-Screen Login Page
+  const handleOpenAuth = (role = 'citizen') => {
+    setAuthModalRole(role);
+    setAuthModalOpen(true);
+  };
+
+  // If user is not logged in, render the Split-Screen Login Page (with Prominent City Picture)
   if (!user) {
     return (
       <LoginPage
@@ -90,14 +124,71 @@ export default function App() {
           // Guest Explore Mode
           const guest = { name: "Guest Reviewer", email: "guest@civicsense.org", role: "officer" };
           setUser(guest);
-          setActiveScreen('eda-dashboard');
+          setViewMode('classic');
+          setClassicTab('eda');
         }}
       />
     );
   }
 
-  // Render the Selected Screen
-  const renderScreen = () => {
+  // =========================================================================
+  // MODE 1: USER'S 1ST CLASSIC PORTAL UI (PRESERVED 100% UNCHANGED)
+  // =========================================================================
+  if (viewMode === 'classic') {
+    const renderClassicContent = () => {
+      if (user.role === 'citizen') {
+        return <CitizenPortal user={user} onOpenAuth={handleOpenAuth} />;
+      }
+
+      // Officer Tabs
+      switch (classicTab) {
+        case 'officer':
+          return <OfficerPortal user={user} onOpenAuth={handleOpenAuth} />;
+        case 'eda':
+          return <EdaView />;
+        case 'multilingual':
+          return <MultilingualPage />;
+        case 'qachat':
+          return <QAChatPage />;
+        case 'marketbasket':
+          return <MarketBasketPage />;
+        default:
+          return <OfficerPortal user={user} onOpenAuth={handleOpenAuth} />;
+      }
+    };
+
+    return (
+      <div style={{ minHeight: '100vh', background: 'var(--bg-dark, #090d16)', color: 'var(--text-main, #f8fafc)', display: 'flex', flexDirection: 'column' }}>
+        {/* 1st UI Top Navbar with View Switcher */}
+        <Navbar
+          user={user}
+          onLogout={handleLogout}
+          onOpenAuth={handleOpenAuth}
+          activeTab={classicTab}
+          setActiveTab={setClassicTab}
+          onToggleViewMode={() => setViewMode('suite')}
+        />
+
+        {/* 1st UI Main Content */}
+        <main style={{ flex: 1, padding: '24px', maxWidth: '1400px', width: '100%', margin: '0 auto' }}>
+          {renderClassicContent()}
+        </main>
+
+        {/* Auth Modal for 1st UI */}
+        <AuthModal
+          isOpen={authModalOpen}
+          onClose={() => setAuthModalOpen(false)}
+          onLoginSuccess={handleLoginSuccess}
+          initialRole={authModalRole}
+        />
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // MODE 2: 21-SCREEN INTELLIGENCE SUITE UI (NEW ADVANCED MODULES)
+  // =========================================================================
+  const renderSuiteScreen = () => {
     switch (activeScreen) {
       // 0. Authentication Screen
       case 'login':
@@ -214,11 +305,12 @@ export default function App() {
           user={user}
           onSwitchRole={handleSwitchRole}
           onLogout={handleLogout}
+          onToggleViewMode={() => setViewMode('classic')}
         />
 
         {/* Scrollable Screen Content Area */}
         <main style={{ flex: 1, background: '#090d16', overflowY: 'auto' }}>
-          {renderScreen()}
+          {renderSuiteScreen()}
         </main>
 
         {/* Academic Footer */}

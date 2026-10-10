@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShieldCheck, UserCheck, LogOut, Sparkles, Activity, Layers } from 'lucide-react';
 
-export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiveTab }) {
+export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiveTab, onToggleViewMode }) {
   return (
     <header style={{
       borderBottom: '1px solid var(--border-color)',
@@ -135,6 +135,31 @@ export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiv
 
         {/* User Session / Auth Controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {/* Toggle between 1st UI and 21-Screen Suite */}
+          {onToggleViewMode && (
+            <button
+              className="btn"
+              style={{
+                padding: '6px 14px',
+                fontSize: '0.78rem',
+                fontWeight: 700,
+                borderRadius: '8px',
+                background: 'rgba(56, 189, 248, 0.12)',
+                border: '1px solid rgba(56, 189, 248, 0.35)',
+                color: '#38bdf8',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                cursor: 'pointer'
+              }}
+              onClick={onToggleViewMode}
+              title="Switch to 21-Screen Dedicated Intelligence Suite"
+            >
+              <Sparkles size={14} color="#38bdf8" />
+              <span>21-Screen Suite</span>
+            </button>
+          )}
+
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <div style={{ textAlign: 'right' }}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShieldCheck, UserCheck, Activity, Cpu, Sparkles, CheckCircle2, LogOut } from 'lucide-react';
 
-export default function TopNav({ activeScreen, user, onSwitchRole, onLogout }) {
+export default function TopNav({ activeScreen, user, onSwitchRole, onLogout, onToggleViewMode }) {
   const getScreenTitle = (id) => {
     const titles = {
       "login": "CivicSense Secure Authentication & Login",
@@ -109,6 +109,31 @@ export default function TopNav({ activeScreen, user, onSwitchRole, onLogout }) {
             Officer Mode
           </button>
         </div>
+
+        {/* Switch to Classic Portal (1st UI) */}
+        {onToggleViewMode && (
+          <button
+            onClick={onToggleViewMode}
+            title="Switch to Classic Portal (1st UI)"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 12px',
+              fontSize: '0.74rem',
+              fontWeight: 700,
+              background: 'rgba(99, 102, 241, 0.15)',
+              color: '#a5b4fc',
+              border: '1px solid rgba(99, 102, 241, 0.35)',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <Sparkles size={13} color="#a5b4fc" />
+            <span>Classic 1st UI</span>
+          </button>
+        )}
 
         {/* User Capsule */}
         <div style={{
