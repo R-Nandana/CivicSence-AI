@@ -99,6 +99,22 @@ export default function App() {
   // Render the Selected Screen
   const renderScreen = () => {
     switch (activeScreen) {
+      // 0. Authentication Screen
+      case 'login':
+        return (
+          <LoginPage
+            onLoginSuccess={(u) => {
+              handleLoginSuccess(u);
+              setActiveScreen(u.role === 'officer' ? 'admin-dashboard' : 'citizen-dashboard');
+            }}
+            onExploreEda={() => {
+              const guest = { name: "Guest Reviewer", email: "guest@civicsense.org", role: "officer" };
+              setUser(guest);
+              setActiveScreen('eda-dashboard');
+            }}
+          />
+        );
+
       // 1. Citizen Screens
       case 'citizen-dashboard':
         return (
@@ -197,6 +213,7 @@ export default function App() {
           activeScreen={activeScreen}
           user={user}
           onSwitchRole={handleSwitchRole}
+          onLogout={handleLogout}
         />
 
         {/* Scrollable Screen Content Area */}

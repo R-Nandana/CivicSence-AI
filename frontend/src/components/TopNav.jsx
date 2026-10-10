@@ -1,9 +1,10 @@
 import React from 'react';
-import { ShieldCheck, UserCheck, Activity, Cpu, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, UserCheck, Activity, Cpu, Sparkles, CheckCircle2, LogOut } from 'lucide-react';
 
-export default function TopNav({ activeScreen, user, onSwitchRole }) {
+export default function TopNav({ activeScreen, user, onSwitchRole, onLogout }) {
   const getScreenTitle = (id) => {
     const titles = {
+      "login": "CivicSense Secure Authentication & Login",
       "citizen-dashboard": "Citizen Complaint Dashboard",
       "text-submission": "Live Text Complaint Submission",
       "voice-record": "Voice Complaint Recording & ASR",
@@ -137,6 +138,37 @@ export default function TopNav({ activeScreen, user, onSwitchRole }) {
             {user?.name || (isOfficer ? 'Municipal Officer' : 'Active Citizen')}
           </span>
         </div>
+
+        {/* Sign Out / View Login Button */}
+        {onLogout && (
+          <button
+            onClick={onLogout}
+            title="Sign Out & Return to Login Screen"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 14px',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              background: 'rgba(239, 68, 68, 0.12)',
+              color: '#f87171',
+              border: '1px solid rgba(239, 68, 68, 0.28)',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.25)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.12)';
+            }}
+          >
+            <LogOut size={13} />
+            <span>Sign Out</span>
+          </button>
+        )}
       </div>
     </header>
   );

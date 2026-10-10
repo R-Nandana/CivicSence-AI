@@ -11,6 +11,12 @@ export default function Sidebar({ activeScreen, setActiveScreen, user, onLogout 
 
   const navGroups = [
     {
+      title: "Authentication & Portal",
+      items: [
+        { id: "login", label: "0. Login & Registration", icon: Shield },
+      ]
+    },
+    {
       title: "Citizen Services",
       items: [
         { id: "citizen-dashboard", label: "Citizen Dashboard", icon: LayoutDashboard },
