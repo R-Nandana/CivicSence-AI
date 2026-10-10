@@ -176,27 +176,10 @@ export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiv
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <button
                 className="btn btn-secondary"
-                style={{ padding: '7px 13px', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
+                style={{ padding: '7px 16px', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
                 onClick={() => onOpenAuth('citizen')}
               >
-                <UserCheck size={14} color="#60a5fa" /> Citizen Login
-              </button>
-              
-              <button
-                className="btn"
-                style={{
-                  padding: '7px 13px',
-                  fontSize: '0.8rem',
-                  background: 'rgba(16, 185, 129, 0.15)',
-                  border: '1px solid rgba(16, 185, 129, 0.4)',
-                  color: '#34d399',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
-                }}
-                onClick={() => onOpenAuth('officer')}
-              >
-                <ShieldCheck size={14} color="#34d399" /> Officer Login
+                <UserCheck size={14} color="#60a5fa" /> Citizen Sign In
               </button>
             </div>
           )}

@@ -93,7 +93,8 @@ export default function App() {
   };
 
   const handleSwitchRole = (newRole) => {
-    if (!user) return;
+    // Security check: Only authenticated municipal officers can toggle views
+    if (!user || user.role !== 'officer') return;
     const updated = {
       ...user,
       role: newRole,
@@ -189,6 +190,26 @@ export default function App() {
   // MODE 2: 21-SCREEN INTELLIGENCE SUITE UI (NEW ADVANCED MODULES)
   // =========================================================================
   const renderSuiteScreen = () => {
+    // Role protection: Citizens cannot access internal municipal officer screens
+    const officerOnlyScreens = [
+      'admin-dashboard',
+      'related-complaints',
+      'resolution-alerts',
+      'human-validation',
+      'eda-dashboard'
+    ];
+    if (user?.role === 'citizen' && officerOnlyScreens.includes(activeScreen)) {
+      return (
+        <CitizenDashboardScreen
+          onNavigate={setActiveScreen}
+          onSelectComplaint={(id) => {
+            setSelectedComplaintId(id);
+            setActiveScreen('issue-timeline');
+          }}
+        />
+      );
+    }
+
     switch (activeScreen) {
       // 0. Authentication Screen
       case 'login':
@@ -303,7 +324,7 @@ export default function App() {
         <TopNav
           activeScreen={activeScreen}
           user={user}
-          onSwitchRole={handleSwitchRole}
+          onSwitchRole={user?.role === 'officer' ? handleSwitchRole : undefined}
           onLogout={handleLogout}
           onToggleViewMode={() => setViewMode('classic')}
         />

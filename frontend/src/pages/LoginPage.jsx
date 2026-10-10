@@ -283,57 +283,53 @@ export default function LoginPage({ onLoginSuccess, onExploreEda }) {
       }}>
         <div style={{ width: '100%', maxWidth: '440px' }}>
 
-          {/* Role Selection Tabs */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '10px',
-            marginBottom: '24px'
-          }}>
-            <button
-              type="button"
-              onClick={() => handleRoleSelect('citizen')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                padding: '12px',
-                borderRadius: '10px',
-                background: !isOfficer ? '#2563eb' : 'rgba(255, 255, 255, 0.05)',
-                color: !isOfficer ? '#fff' : '#94a3b8',
-                border: !isOfficer ? '1px solid #3b82f6' : '1px solid rgba(255, 255, 255, 0.1)',
-                cursor: 'pointer',
-                fontWeight: 700,
-                fontSize: '0.9rem',
-                transition: 'all 0.2s ease'
-              }}
-            >
-              <UserCheck size={18} /> Citizen Portal
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleRoleSelect('officer')}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                padding: '12px',
-                borderRadius: '10px',
-                background: isOfficer ? '#0d9488' : 'rgba(255, 255, 255, 0.05)',
-                color: isOfficer ? '#fff' : '#94a3b8',
-                border: isOfficer ? '1px solid #14b8a6' : '1px solid rgba(255, 255, 255, 0.1)',
-                cursor: 'pointer',
-                fontWeight: 700,
-                fontSize: '0.9rem',
-                transition: 'all 0.2s ease'
-              }}
-            >
-              <ShieldCheck size={18} /> Municipal Officer
-            </button>
-          </div>
+          {/* Role Header indicator (only shows toggle back if officer mode active) */}
+          {isOfficer ? (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '10px 14px',
+              borderRadius: '8px',
+              background: 'rgba(13, 148, 136, 0.15)',
+              border: '1px solid rgba(13, 148, 136, 0.35)',
+              marginBottom: '20px'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#2dd4bf', fontSize: '0.82rem', fontWeight: 700 }}>
+                <ShieldCheck size={16} /> Municipal Officer Portal
+              </div>
+              <button
+                type="button"
+                onClick={() => handleRoleSelect('citizen')}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#94a3b8',
+                  fontSize: '0.75rem',
+                  cursor: 'pointer',
+                  textDecoration: 'underline'
+                }}
+              >
+                ← Return to Citizen Portal
+              </button>
+            </div>
+          ) : (
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '4px 12px',
+              borderRadius: '9999px',
+              background: 'rgba(37, 99, 235, 0.15)',
+              border: '1px solid rgba(37, 99, 235, 0.3)',
+              color: '#93c5fd',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              marginBottom: '18px'
+            }}>
+              <UserCheck size={14} /> Public Citizen Portal
+            </div>
+          )}
 
           {/* Form Header */}
           <div style={{ marginBottom: '24px' }}>
@@ -444,31 +440,53 @@ export default function LoginPage({ onLoginSuccess, onExploreEda }) {
             </button>
           </form>
 
-          {/* Quick 1-Click Academic Demo Logins */}
-          <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '10px', textAlign: 'center' }}>
-              Academic Evaluation Quick Logins
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+          {/* Role-Specific Quick 1-Click Demo Login */}
+          <div style={{ marginTop: '20px', paddingTop: '18px', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+            {!isOfficer ? (
               <button
                 type="button"
                 onClick={() => handleQuickDemoLogin('citizen')}
                 disabled={loading}
                 className="btn btn-secondary"
-                style={{ fontSize: '0.8rem', padding: '9px 12px', borderRadius: '8px' }}
+                style={{
+                  width: '100%',
+                  fontSize: '0.82rem',
+                  padding: '10px 14px',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  background: 'rgba(37, 99, 235, 0.1)',
+                  borderColor: 'rgba(37, 99, 235, 0.3)',
+                  color: '#93c5fd'
+                }}
               >
-                <UserCheck size={14} color="#60a5fa" /> Citizen Demo
+                <UserCheck size={15} color="#60a5fa" /> Quick Demo Sign In (citizen@civicsense.org)
               </button>
+            ) : (
               <button
                 type="button"
                 onClick={() => handleQuickDemoLogin('officer')}
                 disabled={loading}
                 className="btn btn-secondary"
-                style={{ fontSize: '0.8rem', padding: '9px 12px', borderRadius: '8px' }}
+                style={{
+                  width: '100%',
+                  fontSize: '0.82rem',
+                  padding: '10px 14px',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  background: 'rgba(13, 148, 136, 0.15)',
+                  borderColor: 'rgba(13, 148, 136, 0.35)',
+                  color: '#2dd4bf'
+                }}
               >
-                <ShieldCheck size={14} color="#2dd4bf" /> Officer Demo
+                <ShieldCheck size={15} color="#2dd4bf" /> Quick Officer Sign In (officer@civicsense.org)
               </button>
-            </div>
+            )}
           </div>
 
           {/* Toggle Register / Login */}
@@ -516,6 +534,31 @@ export default function LoginPage({ onLoginSuccess, onExploreEda }) {
               Explore EDA & Open Data in Guest Mode <ArrowRight size={12} />
             </button>
           </div>
+
+          {/* Subtle Municipal Authority Link (Separated from Citizen Experience) */}
+          {!isOfficer && (
+            <div style={{ marginTop: '24px', paddingTop: '14px', borderTop: '1px solid rgba(255, 255, 255, 0.05)', textAlign: 'center' }}>
+              <button
+                type="button"
+                onClick={() => handleRoleSelect('officer')}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#475569',
+                  fontSize: '0.72rem',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'color 0.2s ease'
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = '#94a3b8'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = '#475569'; }}
+              >
+                <Lock size={11} /> Authorized Municipal Authority / Department Login
+              </button>
+            </div>
+          )}
 
         </div>
       </div>

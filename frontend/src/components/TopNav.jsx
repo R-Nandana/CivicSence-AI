@@ -67,48 +67,50 @@ export default function TopNav({ activeScreen, user, onSwitchRole, onLogout, onT
 
       {/* Right Actions & Role Toggle */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-        {/* Quick Academic Role Switcher */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          background: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: '8px',
-          padding: '2px'
-        }}>
-          <button
-            onClick={() => onSwitchRole('citizen')}
-            style={{
-              padding: '4px 10px',
-              fontSize: '0.72rem',
-              fontWeight: 700,
-              borderRadius: '6px',
-              border: 'none',
-              cursor: 'pointer',
-              background: !isOfficer ? '#2563eb' : 'transparent',
-              color: !isOfficer ? '#fff' : '#94a3b8',
-              transition: 'all 0.15s ease'
-            }}
-          >
-            Citizen Mode
-          </button>
-          <button
-            onClick={() => onSwitchRole('officer')}
-            style={{
-              padding: '4px 10px',
-              fontSize: '0.72rem',
-              fontWeight: 700,
-              borderRadius: '6px',
-              border: 'none',
-              cursor: 'pointer',
-              background: isOfficer ? '#0d9488' : 'transparent',
-              color: isOfficer ? '#fff' : '#94a3b8',
-              transition: 'all 0.15s ease'
-            }}
-          >
-            Officer Mode
-          </button>
-        </div>
+        {/* Only visible if logged in as an officer */}
+        {isOfficer && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            background: 'rgba(255, 255, 255, 0.05)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '8px',
+            padding: '2px'
+          }}>
+            <button
+              onClick={() => onSwitchRole('citizen')}
+              style={{
+                padding: '4px 10px',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                borderRadius: '6px',
+                border: 'none',
+                cursor: 'pointer',
+                background: !isOfficer ? '#2563eb' : 'transparent',
+                color: !isOfficer ? '#fff' : '#94a3b8',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              Citizen View
+            </button>
+            <button
+              onClick={() => onSwitchRole('officer')}
+              style={{
+                padding: '4px 10px',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                borderRadius: '6px',
+                border: 'none',
+                cursor: 'pointer',
+                background: isOfficer ? '#0d9488' : 'transparent',
+                color: isOfficer ? '#fff' : '#94a3b8',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              Officer Console
+            </button>
+          </div>
+        )}
 
         {/* Switch to Classic Portal (1st UI) */}
         {onToggleViewMode && (

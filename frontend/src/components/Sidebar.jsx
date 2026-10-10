@@ -13,7 +13,7 @@ export default function Sidebar({ activeScreen, setActiveScreen, user, onLogout 
     {
       title: "Authentication & Portal",
       items: [
-        { id: "login", label: "0. Login & Registration", icon: Shield },
+        { id: "login", label: "0. Portal Sign In", icon: Shield },
       ]
     },
     {
@@ -46,7 +46,8 @@ export default function Sidebar({ activeScreen, setActiveScreen, user, onLogout 
         { id: "video-analysis", label: "Video Frame Analysis", icon: Video },
       ]
     },
-    {
+    // Only displayed to authorized officers
+    ...(isOfficer ? [{
       title: "Officer & Governance",
       items: [
         { id: "admin-dashboard", label: "Officer KPI Dashboard", icon: BarChart3, officerOnly: true },
@@ -55,7 +56,7 @@ export default function Sidebar({ activeScreen, setActiveScreen, user, onLogout 
         { id: "human-validation", label: "Human AI Validation", icon: CheckSquare, officerOnly: true },
         { id: "eda-dashboard", label: "ETL & EDA Analytics", icon: Database },
       ]
-    }
+    }] : [])
   ];
 
   return (
