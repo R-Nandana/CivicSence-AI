@@ -112,7 +112,30 @@ export default function TopNav({ activeScreen, user, onSwitchRole, onLogout, onT
           </div>
         )}
 
-        {/* Switch to Classic Portal (1st UI) */}
+        {/* Municipal Officer Login button for citizen view */}
+        {!isOfficer && onSwitchRole && (
+          <button
+            onClick={() => onSwitchRole('officer')}
+            title="Log in as Municipal Officer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 12px',
+              fontSize: '0.74rem',
+              fontWeight: 700,
+              background: 'rgba(13, 148, 136, 0.15)',
+              color: '#2dd4bf',
+              border: '1px solid rgba(13, 148, 136, 0.35)',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <ShieldCheck size={13} color="#2dd4bf" />
+            <span>Municipal Officer Login</span>
+          </button>
+        )}
         {onToggleViewMode && (
           <button
             onClick={onToggleViewMode}

@@ -162,6 +162,30 @@ export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiv
 
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              {user.role === 'citizen' && (
+                <button
+                  className="btn"
+                  style={{
+                    padding: '6px 14px',
+                    fontSize: '0.78rem',
+                    fontWeight: 700,
+                    background: 'rgba(13, 148, 136, 0.15)',
+                    border: '1px solid rgba(13, 148, 136, 0.4)',
+                    color: '#2dd4bf',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    borderRadius: '8px',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => onOpenAuth('officer')}
+                  title="Sign In as Municipal Officer"
+                >
+                  <ShieldCheck size={14} color="#2dd4bf" />
+                  <span>Municipal Officer Login</span>
+                </button>
+              )}
+
               <div style={{ textAlign: 'right' }}>
                 <p style={{ fontSize: '0.85rem', fontWeight: 600, color: '#fff' }}>{user.name}</p>
                 <span className={`badge ${user.role === 'officer' ? 'badge-green' : 'badge-blue'}`} style={{ fontSize: '0.65rem' }}>

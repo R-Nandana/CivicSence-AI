@@ -93,8 +93,10 @@ export default function App() {
   };
 
   const handleSwitchRole = (newRole) => {
-    // Security check: Only authenticated municipal officers can toggle views
-    if (!user || user.role !== 'officer') return;
+    if (newRole === 'officer' && user?.role === 'citizen') {
+      handleOpenAuth('officer');
+      return;
+    }
     const updated = {
       ...user,
       role: newRole,
@@ -324,7 +326,7 @@ export default function App() {
         <TopNav
           activeScreen={activeScreen}
           user={user}
-          onSwitchRole={user?.role === 'officer' ? handleSwitchRole : undefined}
+          onSwitchRole={handleSwitchRole}
           onLogout={handleLogout}
           onToggleViewMode={() => setViewMode('classic')}
         />
