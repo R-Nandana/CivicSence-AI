@@ -137,23 +137,29 @@ class MachineTranslator:
                 "is_translated": False
             }
 
-        # 1. Try Neural Online Machine Translation
+        # 1. Try Neural Online Machine Translation (with fast timeout fallback)
         if HAS_DEEP_TRANSLATOR and is_tamil:
             try:
-                translator = GoogleTranslator(source="ta", target="en")
-                translated = translator.translate(cleaned_text)
-                if translated and translated.strip():
-                    return {
-                        "original_text": cleaned_text,
-                        "translated_text": translated.strip(),
-                        "source_language": "Tamil",
-                        "target_language": "English",
-                        "engine": "Neural Machine Translation (Google MT)",
-                        "confidence": 0.96,
-                        "is_translated": True
-                    }
+                import socket
+                orig_timeout = socket.getdefaulttimeout()
+                socket.setdefaulttimeout(3.0)
+                try:
+                    translator = GoogleTranslator(source="ta", target="en")
+                    translated = translator.translate(cleaned_text)
+                    if translated and translated.strip():
+                        return {
+                            "original_text": cleaned_text,
+                            "translated_text": translated.strip(),
+                            "source_language": "Tamil",
+                            "target_language": "English",
+                            "engine": "Neural Machine Translation (Google MT)",
+                            "confidence": 0.96,
+                            "is_translated": True
+                        }
+                finally:
+                    socket.setdefaulttimeout(orig_timeout)
             except Exception:
-                pass  # Fallback to domain dictionary
+                pass  # Fallback directly to domain dictionary without blocking
 
         # 2. Tanglish / Tamil Hybrid Domain Machine Translation
         translated = cleaned_text
