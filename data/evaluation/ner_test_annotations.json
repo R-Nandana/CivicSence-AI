@@ -1,0 +1,82 @@
+[
+  {
+    "id": "NER-01",
+    "text": "The streetlight near Gandhipuram bus stand has been off for four nights.",
+    "category": "Streetlights",
+    "expected_entities": [
+      {"entity_type": "LOCATION", "entity_text": "Gandhipuram bus stand"},
+      {"entity_type": "INFRASTRUCTURE", "entity_text": "streetlight"},
+      {"entity_type": "DURATION", "entity_text": "four nights"}
+    ]
+  },
+  {
+    "id": "NER-02",
+    "text": "There is a huge pothole near Anna Nagar junction causing vehicle damage for the past two weeks.",
+    "category": "Roads",
+    "expected_entities": [
+      {"entity_type": "LOCATION", "entity_text": "Anna Nagar junction"},
+      {"entity_type": "INFRASTRUCTURE", "entity_text": "pothole"},
+      {"entity_type": "DURATION", "entity_text": "the past two weeks"}
+    ]
+  },
+  {
+    "id": "NER-03",
+    "text": "Bus stand pakkathula streetlight 4 days ah work aagala.",
+    "category": "Streetlights",
+    "expected_entities": [
+      {"entity_type": "LOCATION", "entity_text": "Bus stand"},
+      {"entity_type": "INFRASTRUCTURE", "entity_text": "streetlight"},
+      {"entity_type": "DURATION", "entity_text": "4 days ah"}
+    ]
+  },
+  {
+    "id": "NER-04",
+    "text": "Open sewer manhole overflowing at Broadway & 72nd St since yesterday.",
+    "category": "Drainage",
+    "expected_entities": [
+      {"entity_type": "LOCATION", "entity_text": "Broadway & 72nd St"},
+      {"entity_type": "INFRASTRUCTURE", "entity_text": "manhole"},
+      {"entity_type": "DURATION", "entity_text": "since yesterday"}
+    ]
+  },
+  {
+    "id": "NER-05",
+    "text": "No water supply in Flat B-12 near Central Railway Station for 3 days.",
+    "category": "Water Supply",
+    "expected_entities": [
+      {"entity_type": "LOCATION", "entity_text": "Central Railway Station"},
+      {"entity_type": "INFRASTRUCTURE", "entity_text": "water supply"},
+      {"entity_type": "DURATION", "entity_text": "for 3 days"}
+    ]
+  },
+  {
+    "id": "NER-06",
+    "text": "Traffic light signal stuck on red at 7th Ave and 34th St causing chaos for 5 hours.",
+    "category": "Traffic",
+    "expected_entities": [
+      {"entity_type": "LOCATION", "entity_text": "7th Ave and 34th St"},
+      {"entity_type": "INFRASTRUCTURE", "entity_text": "Traffic light"},
+      {"entity_type": "DURATION", "entity_text": "for 5 hours"}
+    ]
+  },
+  {
+    "id": "NER-07",
+    "text": "Garbage bins overflowing opposite City Hospital for one week.",
+    "category": "Waste Management",
+    "expected_entities": [
+      {"entity_type": "LOCATION", "entity_text": "City Hospital"},
+      {"entity_type": "INFRASTRUCTURE", "entity_text": "Garbage bins"},
+      {"entity_type": "DURATION", "entity_text": "for one week"}
+    ]
+  },
+  {
+    "id": "NER-08",
+    "text": "Broken tree branch hanging dangerously near Government School since last night.",
+    "category": "Public Infrastructure",
+    "expected_entities": [
+      {"entity_type": "LOCATION", "entity_text": "Government School"},
+      {"entity_type": "INFRASTRUCTURE", "entity_text": "tree branch"},
+      {"entity_type": "DURATION", "entity_text": "since last night"}
+    ]
+  }
+]
