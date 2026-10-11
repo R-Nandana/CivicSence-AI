@@ -436,29 +436,7 @@ Execute with:
 py -m pytest tests/test_civicsense_backend.py -v
 ```
 
----
 
-## 📸 Screenshot Capture Checklist
-
-When presenting or submitting the running CivicSense application, capture screenshots of the following key screens:
-
-- [ ] **1. Login Screen**: Split layout showing the city photography branding panel on the left and the login card on the right.
-- [ ] **2. Citizen Dashboard**: Summary cards, quick submission button, and recent complaints table.
-- [ ] **3. Text Classification Screen**: Probability distribution bar chart (Recharts) and 8x8 Confusion Matrix.
-- [ ] **4. Named Entity Recognition Screen**: Extracted badges for Location, Infrastructure, Duration, and Department.
-- [ ] **5. Multilingual & Translation Screen**: Side-by-side original Tamil/Tanglish text and translated English complaint.
-- [ ] **6. Voice Complaint & Speech Screen**: Live microphone recorder and acoustic waveform analysis.
-- [ ] **7. Image Evidence Verification Screen**: Image preview with visual feature findings and `SUPPORTS_COMPLAINT` badge.
-- [ ] **8. Video Evidence Verification Screen**: Extracted keyframe gallery with frame-level findings.
-- [ ] **9. Related Complaints Screen**: Multi-factor similarity groupings and duplicate candidate radar.
-- [ ] **10. Issue Timeline Screen**: Chronological event cards (submission, status update, evidence upload, officer validation).
-- [ ] **11. Resolution Inconsistency Alert Screen**: Neutral phrasing alert card with officer determination modal.
-- [ ] **12. Human Validation Screen**: Officer review table with AI category correction dropdown and retraining feedback.
-- [ ] **13. Admin Analytics Dashboard**: Recharts category bar chart, status pie chart, and KPI metric cards.
-- [ ] **14. Grounded Database QA Screen**: Operational question input with live supporting complaint cards and applied filters.
-- [ ] **15. ETL & EDA Dashboard**: NYC 311 dataset overview, class balance chart, and vocabulary stats.
-
----
 
 ## 🔐 Default Credentials & Seed Accounts
 
