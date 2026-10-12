@@ -493,9 +493,9 @@ export default function CitizenPortal({ user, onOpenAuth }) {
                     value={speechLanguage}
                     onChange={(e) => setSpeechLanguage(e.target.value)}
                     style={{
-                      background: 'rgba(255,255,255,0.06)',
+                      background: 'var(--panel-bg)',
                       border: '1px solid var(--border-color)',
-                      color: '#cbd5e1',
+                      color: 'var(--text-muted)',
                       borderRadius: '6px',
                       fontSize: '0.72rem',
                       padding: '3px 6px'

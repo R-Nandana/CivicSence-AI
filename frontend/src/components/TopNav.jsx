@@ -1,32 +1,32 @@
-import React from 'react';
-import { ShieldCheck, UserCheck, Activity, Cpu, Sparkles, CheckCircle2, LogOut } from 'lucide-react';
+﻿import React from 'react';
+import { ShieldCheck, UserCheck, Activity, Cpu, Sparkles, CheckCircle2, LogOut, Sun, Moon } from 'lucide-react';
 
-export default function TopNav({ activeScreen, user, onSwitchRole, onLogout, onToggleViewMode }) {
+export default function TopNav({ activeScreen, user, onSwitchRole, onLogout, onToggleViewMode, theme = 'dark', onToggleTheme }) {
   const getScreenTitle = (id) => {
     const titles = {
-      "login": "CivicSense Secure Authentication & Login",
-      "citizen-dashboard": "Citizen Complaint Dashboard",
-      "text-submission": "Live Text Complaint Submission",
-      "voice-record": "Voice Complaint Recording & ASR",
-      "image-upload": "Image Evidence Submission",
-      "video-upload": "Video Evidence Submission",
-      "issue-timeline": "Issue Evolution & Audit Timeline",
-      "text-classification": "Concept 1: Text Classification (TF-IDF + Softmax)",
-      "ner-results": "Concept 2: Named Entity Recognition (NER)",
-      "multilingual": "Concept 3: Multilingual NLP & Tanglish",
-      "translation": "Concept 4: Domain Machine Translation (BLEU)",
-      "speech-results": "Concept 5: Speech Processing & Acoustic WER",
-      "qa-interface": "Concept 6: Database-Grounded Question Answering",
-      "qa-analytics": "QA Query Analytics & Grounded Audit Logs",
-      "image-analysis": "Computer Vision: Image Evidence Verification",
-      "video-analysis": "Computer Vision: Video Keyframe Evidence Verification",
-      "admin-dashboard": "Municipal Officer Control Center & Analytics",
-      "related-complaints": "Related Complaints & Issue Evolution Matching",
-      "resolution-alerts": "Resolution Monitoring & Inconsistency Alerts",
-      "human-validation": "Human-in-the-Loop AI Validation & Feedback",
-      "eda-dashboard": "Exploratory Data Analysis (EDA) & NYC 311 ETL"
+      "login": "CivicSense Secure Authentication Portal",
+      "citizen-dashboard": "Citizen Grievance & Issue Tracking Hub",
+      "text-submission": "File New Municipal Grievance",
+      "voice-record": "Voice Grievance Recording & Speech-to-Text",
+      "image-upload": "Photo Evidence Attachment",
+      "video-upload": "Video Evidence Attachment",
+      "issue-timeline": "Grievance Evolution & Audit Timeline",
+      "text-classification": "AI Grievance Classification Engine",
+      "ner-results": "Civic Named Entity Recognition (NER)",
+      "multilingual": "Universal Multilingual NLP & Translation Hub",
+      "translation": "Cross-Lingual Machine Translation & BLEU",
+      "speech-results": "Voice Acoustic Analytics & Speech Benchmarks",
+      "qa-interface": "Database-Grounded Citizen AI Helpdesk",
+      "qa-analytics": "Municipal Knowledge Base & Query Audits",
+      "image-analysis": "Visual Evidence Verification Lab",
+      "video-analysis": "Video Keyframe Evidence Inspection",
+      "admin-dashboard": "Municipal Operations Command Center & Analytics",
+      "related-complaints": "Duplicate & Related Issue Cluster Intelligence",
+      "resolution-alerts": "Resolution Monitoring & Audit Alerts",
+      "human-validation": "Officer Verification & Active Learning Review",
+      "eda-dashboard": "City Grievance Open Data & ETL Analytics"
     };
-    return titles[id] || "CivicSense AI Portal";
+    return titles[id] || "CivicSense AI Smart City Portal";
   };
 
   const isOfficer = user?.role === 'officer';
@@ -34,20 +34,22 @@ export default function TopNav({ activeScreen, user, onSwitchRole, onLogout, onT
   return (
     <header style={{
       height: '64px',
-      background: 'rgba(10, 15, 29, 0.95)',
+      background: 'var(--topbar-bg)',
       backdropFilter: 'blur(12px)',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+      WebkitBackdropFilter: 'blur(12px)',
+      borderBottom: '1px solid var(--header-border)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       padding: '0 28px',
       position: 'sticky',
       top: 0,
-      zIndex: 30
+      zIndex: 30,
+      transition: 'background 0.25s ease, border-color 0.25s ease'
     }}>
       {/* Current Screen Title */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <h2 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.01em' }}>
+        <h2 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.01em', margin: 0 }}>
           {getScreenTitle(activeScreen)}
         </h2>
         <span style={{
@@ -55,91 +57,48 @@ export default function TopNav({ activeScreen, user, onSwitchRole, onLogout, onT
           padding: '2px 8px',
           borderRadius: '9999px',
           background: 'rgba(16, 185, 129, 0.15)',
-          color: '#34d399',
+          color: '#10b981',
           border: '1px solid rgba(16, 185, 129, 0.3)',
           display: 'flex',
           alignItems: 'center',
-          gap: '4px'
+          gap: '4px',
+          fontWeight: 600
         }}>
           <CheckCircle2 size={11} /> Models Ready
         </span>
       </div>
 
-      {/* Right Actions & Role Toggle */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-        {/* Only visible if logged in as an officer */}
-        {isOfficer && (
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            background: 'rgba(255, 255, 255, 0.05)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: '8px',
-            padding: '2px'
-          }}>
-            <button
-              onClick={() => onSwitchRole('citizen')}
-              style={{
-                padding: '4px 10px',
-                fontSize: '0.72rem',
-                fontWeight: 700,
-                borderRadius: '6px',
-                border: 'none',
-                cursor: 'pointer',
-                background: !isOfficer ? '#2563eb' : 'transparent',
-                color: !isOfficer ? '#fff' : '#94a3b8',
-                transition: 'all 0.15s ease'
-              }}
-            >
-              Citizen View
-            </button>
-            <button
-              onClick={() => onSwitchRole('officer')}
-              style={{
-                padding: '4px 10px',
-                fontSize: '0.72rem',
-                fontWeight: 700,
-                borderRadius: '6px',
-                border: 'none',
-                cursor: 'pointer',
-                background: isOfficer ? '#0d9488' : 'transparent',
-                color: isOfficer ? '#fff' : '#94a3b8',
-                transition: 'all 0.15s ease'
-              }}
-            >
-              Officer Console
-            </button>
-          </div>
-        )}
-
-        {/* Municipal Officer Login button for citizen view */}
-        {!isOfficer && onSwitchRole && (
+      {/* Right Actions & Controls */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        
+        {/* Interactive Light / Dark Mode Toggle Button */}
+        {onToggleTheme && (
           <button
-            onClick={() => onSwitchRole('officer')}
-            title="Log in as Municipal Officer"
+            onClick={onToggleTheme}
+            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             style={{
+              width: '38px',
+              height: '38px',
+              borderRadius: '10px',
+              background: 'var(--panel-bg)',
+              border: '1px solid var(--border-color)',
+              color: theme === 'dark' ? '#fbbf24' : '#4f46e5',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              padding: '6px 12px',
-              fontSize: '0.74rem',
-              fontWeight: 700,
-              background: 'rgba(13, 148, 136, 0.15)',
-              color: '#2dd4bf',
-              border: '1px solid rgba(13, 148, 136, 0.35)',
-              borderRadius: '8px',
+              justifyContent: 'center',
               cursor: 'pointer',
-              transition: 'all 0.15s ease'
+              transition: 'all 0.2s ease'
             }}
           >
-            <ShieldCheck size={13} color="#2dd4bf" />
-            <span>Municipal Officer Login</span>
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         )}
+
+        {/* View Switcher: Classic 1st UI */}
         {onToggleViewMode && (
           <button
             onClick={onToggleViewMode}
-            title="Switch to Classic Portal (1st UI)"
+            title="Switch to Classic Portal"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -147,16 +106,16 @@ export default function TopNav({ activeScreen, user, onSwitchRole, onLogout, onT
               padding: '6px 12px',
               fontSize: '0.74rem',
               fontWeight: 700,
-              background: 'rgba(99, 102, 241, 0.15)',
-              color: '#a5b4fc',
-              border: '1px solid rgba(99, 102, 241, 0.35)',
+              background: 'rgba(99, 102, 241, 0.12)',
+              color: 'var(--primary)',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               cursor: 'pointer',
               transition: 'all 0.15s ease'
             }}
           >
-            <Sparkles size={13} color="#a5b4fc" />
-            <span>Classic 1st UI</span>
+            <Sparkles size={13} />
+            <span>Classic View</span>
           </button>
         )}
 
@@ -166,8 +125,8 @@ export default function TopNav({ activeScreen, user, onSwitchRole, onLogout, onT
           alignItems: 'center',
           gap: '10px',
           padding: '4px 12px',
-          background: 'rgba(255, 255, 255, 0.04)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
+          background: 'var(--panel-bg)',
+          border: '1px solid var(--border-color)',
           borderRadius: '9999px'
         }}>
           <div style={{
@@ -184,16 +143,19 @@ export default function TopNav({ activeScreen, user, onSwitchRole, onLogout, onT
           }}>
             {user?.name?.[0]?.toUpperCase() || 'U'}
           </div>
-          <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#f8fafc' }}>
-            {user?.name || (isOfficer ? 'Municipal Officer' : 'Active Citizen')}
+          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-main)' }}>
+            {user?.name || (isOfficer ? 'Municipal Officer' : 'Citizen')}
+          </span>
+          <span className={`badge ${isOfficer ? 'badge-green' : 'badge-blue'}`} style={{ fontSize: '0.62rem', padding: '1px 6px' }}>
+            {isOfficer ? 'OFFICER' : 'CITIZEN'}
           </span>
         </div>
 
-        {/* Sign Out / View Login Button */}
+        {/* Sign Out Button */}
         {onLogout && (
           <button
             onClick={onLogout}
-            title="Sign Out & Return to Login Screen"
+            title="Sign Out"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -202,17 +164,11 @@ export default function TopNav({ activeScreen, user, onSwitchRole, onLogout, onT
               fontSize: '0.75rem',
               fontWeight: 700,
               background: 'rgba(239, 68, 68, 0.12)',
-              color: '#f87171',
+              color: '#ef4444',
               border: '1px solid rgba(239, 68, 68, 0.28)',
               borderRadius: '8px',
               cursor: 'pointer',
               transition: 'all 0.15s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.25)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.12)';
             }}
           >
             <LogOut size={13} />
@@ -223,3 +179,4 @@ export default function TopNav({ activeScreen, user, onSwitchRole, onLogout, onT
     </header>
   );
 }
+

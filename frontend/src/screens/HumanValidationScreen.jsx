@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { CheckSquare, ShieldCheck, CheckCircle2, RotateCcw, Search, Filter, AlertCircle } from 'lucide-react';
 import { api } from '../services/api';
 
@@ -73,11 +73,11 @@ export default function HumanValidationScreen({ user }) {
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
           <span className="badge badge-purple">Human-in-the-Loop</span>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
             Human AI Validation & Model Improvement Pipeline
           </h1>
         </div>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           Municipal officers review, verify, or correct AI model classifications. Verified labels are securely stored in the
           `validated_feedback` collection for scheduled retraining, versioning, and deployment.
         </p>
@@ -93,7 +93,7 @@ export default function HumanValidationScreen({ user }) {
           display: 'flex',
           alignItems: 'center',
           gap: '10px',
-          color: '#34d399',
+          color: 'var(--accent-green)',
           fontWeight: 600
         }}>
           <CheckCircle2 size={18} /> {successMsg}
@@ -103,24 +103,24 @@ export default function HumanValidationScreen({ user }) {
       {/* Validation Modal / Active Card */}
       {validatingComplaint && (
         <div className="glass-panel" style={{ padding: '24px', marginBottom: '28px', borderColor: 'rgba(99, 102, 241, 0.4)' }}>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#fff', marginBottom: '14px' }}>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '14px' }}>
             Verify / Correct Model Prediction: {validatingComplaint.complaint_id}
           </h3>
 
           <form onSubmit={handleValidateSubmit}>
-            <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '16px', borderRadius: '10px', marginBottom: '16px' }}>
-              <span style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Complaint Narrative</span>
-              <p style={{ fontSize: '1rem', color: '#fff', marginTop: '4px' }}>
+            <div style={{ background: 'var(--panel-bg)', padding: '16px', borderRadius: '10px', marginBottom: '16px' }}>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Complaint Narrative</span>
+              <p style={{ fontSize: '1rem', color: 'var(--text-main)', marginTop: '4px' }}>
                 "{validatingComplaint.original_text}"
               </p>
-              <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '8px' }}>
-                Current Prediction: <strong style={{ color: '#60a5fa' }}>{validatingComplaint.predicted_category}</strong> ({(validatingComplaint.confidence * 100).toFixed(1)}% certainty)
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '8px' }}>
+                Current Prediction: <strong style={{ color: 'var(--primary-light)' }}>{validatingComplaint.predicted_category}</strong> ({(validatingComplaint.confidence * 100).toFixed(1)}% certainty)
               </div>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '16px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#cbd5e1', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '6px' }}>
                   Validated / Correct Category *
                 </label>
                 <select
@@ -135,7 +135,7 @@ export default function HumanValidationScreen({ user }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#cbd5e1', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '6px' }}>
                   Officer Verification Notes
                 </label>
                 <input
@@ -170,14 +170,14 @@ export default function HumanValidationScreen({ user }) {
 
       {/* Two Tabs: Complaints to Validate vs Validated Feedback History */}
       <div className="glass-panel" style={{ padding: '24px' }}>
-        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#fff', marginBottom: '14px' }}>
+        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '14px' }}>
           Complaints Pending Review & Validation ({complaints.length})
         </h3>
 
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '30px', color: '#94a3b8' }}>Loading records...</div>
+          <div style={{ textAlign: 'center', padding: '30px', color: 'var(--text-muted)' }}>Loading records...</div>
         ) : complaints.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '30px', color: '#64748b' }}>No complaints available.</div>
+          <div style={{ textAlign: 'center', padding: '30px', color: 'var(--text-dim)' }}>No complaints available.</div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table className="civic-table">
@@ -195,13 +195,13 @@ export default function HumanValidationScreen({ user }) {
               <tbody>
                 {complaints.slice(0, 20).map(c => (
                   <tr key={c.complaint_id}>
-                    <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#60a5fa' }}>{c.complaint_id}</td>
+                    <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--primary-light)' }}>{c.complaint_id}</td>
                     <td><span className="badge badge-purple">{c.predicted_category}</span></td>
-                    <td style={{ color: '#34d399', fontWeight: 700 }}>{(c.confidence * 100).toFixed(1)}%</td>
+                    <td style={{ color: 'var(--accent-green)', fontWeight: 700 }}>{(c.confidence * 100).toFixed(1)}%</td>
                     <td style={{ maxWidth: '300px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {c.original_text}
                     </td>
-                    <td style={{ color: '#94a3b8' }}>{c.location}</td>
+                    <td style={{ color: 'var(--text-muted)' }}>{c.location}</td>
                     <td><span className="badge badge-blue">{c.status}</span></td>
                     <td>
                       <button
@@ -223,3 +223,4 @@ export default function HumanValidationScreen({ user }) {
     </div>
   );
 }
+

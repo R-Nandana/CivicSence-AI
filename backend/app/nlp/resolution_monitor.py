@@ -109,9 +109,90 @@ class ResolutionMonitorEngine:
 
         return None
 
+    def _auto_seed_demo_alerts(self):
+        """Auto-seeds realistic civic inconsistency alert cases for demonstration and testing."""
+        alerts_col = get_collection("resolution_alerts")
+        if alerts_col.find():
+            return
+        complaints_col = get_collection("complaints")
+        from backend.app.database.models import create_complaint_doc
+
+        cases = [
+            (
+                "CIV-RES-8821",
+                "Severe deep potholes across 5th Main Road damaging two-wheelers and cars.",
+                "Resolved",
+                "CIV-FLW-9402",
+                "The potholes on 5th Main Road filled last week have completely re-opened after rainfall. The asphalt washed away and gravel is scattered everywhere.",
+                "Roads & Pavements",
+                "5th Main Road, Ward 14",
+                "ALT-RES-0104"
+            ),
+            (
+                "CIV-RES-7104",
+                "All three streetlights near Gandhipuram bus stop have been completely blacked out for five nights.",
+                "Resolved",
+                "CIV-FLW-8319",
+                "Streetlights at Gandhipuram bus shelter are still dead at night. Marked as resolved on portal but no lights are on.",
+                "Street Lighting",
+                "Gandhipuram Cross, Ward 12",
+                "ALT-RES-0219"
+            ),
+            (
+                "CIV-RES-6052",
+                "Massive pile of decomposing market waste overflowing onto roadway attracting strays.",
+                "Resolved",
+                "CIV-FLW-7741",
+                "Waste bin removed entirely after clearance, now commercial vendors are dumping directly on pavement creating bigger hazard.",
+                "Sanitation & Garbage",
+                "Market Road Commercial Junction",
+                "ALT-RES-0388"
+            )
+        ]
+
+        for orig_id, orig_text, orig_status, flw_id, flw_text, cat, loc, alt_id in cases:
+            if not complaints_col.find_one({"complaint_id": orig_id}):
+                complaints_col.insert_one(create_complaint_doc(
+                    complaint_id=orig_id,
+                    user_id="demo_user",
+                    original_text=orig_text,
+                    language="English",
+                    source="NYC_311_Dataset",
+                    location=loc,
+                    predicted_category=cat,
+                    confidence=0.95,
+                    status=orig_status
+                ))
+            if not complaints_col.find_one({"complaint_id": flw_id}):
+                complaints_col.insert_one(create_complaint_doc(
+                    complaint_id=flw_id,
+                    user_id="demo_user",
+                    original_text=flw_text,
+                    language="English",
+                    source="User_Submitted",
+                    location=loc,
+                    predicted_category=cat,
+                    confidence=0.96,
+                    status="New"
+                ))
+            if not alerts_col.find_one({"alert_id": alt_id}):
+                alerts_col.insert_one(create_resolution_alert_doc(
+                    alert_id=alt_id,
+                    original_complaint_id=orig_id,
+                    followup_complaint_id=flw_id,
+                    category=cat,
+                    location=loc,
+                    alert_message=f"The new citizen report appears inconsistent with the current resolved status of earlier complaint {orig_id} and requires verification.",
+                    evidence_assessment="REQUIRES_HUMAN_REVIEW",
+                    status="PENDING_VERIFICATION"
+                ))
+
     def get_all_alerts(self, status: Optional[str] = None) -> List[Dict[str, Any]]:
         """Fetches all resolution inconsistency alerts with hydrated complaint and evidence metadata."""
         alerts_col = get_collection("resolution_alerts")
+        if not alerts_col.find():
+            self._auto_seed_demo_alerts()
+
         complaints_col = get_collection("complaints")
         evidence_col = get_collection("evidence")
 

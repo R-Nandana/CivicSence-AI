@@ -134,7 +134,7 @@ export default function QAChatPage() {
             <Sparkles size={22} color="#fff" />
           </div>
           <div>
-            <h1 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+            <h1 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
               AI Question Answering & Chatbot
             </h1>
             <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.85rem' }}>
@@ -173,7 +173,7 @@ export default function QAChatPage() {
                   <Bot size={18} color="#fff" />
                 </div>
                 <div>
-                  <p style={{ margin: 0, fontWeight: 700, color: '#fff', fontSize: '0.9rem' }}>CivicAssist AI</p>
+                  <p style={{ margin: 0, fontWeight: 700, color: 'var(--text-main)', fontSize: '0.9rem' }}>CivicAssist AI</p>
                   <p style={{ margin: 0, fontSize: '0.72rem', color: '#10b981' }}>● Online — Gemini Powered</p>
                 </div>
               </div>
@@ -427,7 +427,7 @@ export default function QAChatPage() {
                   </button>
                   {expandedFaq === i && (
                     <div style={{ padding: '0 12px 12px', borderTop: '1px solid var(--border-color)' }}>
-                      <p style={{ margin: '10px 0 8px', fontSize: '0.75rem', color: '#94a3b8', lineHeight: 1.55 }}>{faq.answer}</p>
+                      <p style={{ margin: '10px 0 8px', fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.55 }}>{faq.answer}</p>
                       <button onClick={() => { handleQA(faq.question); setActiveTab('qa'); }} style={{
                         background: 'rgba(79,70,229,0.15)', border: '1px solid rgba(79,70,229,0.3)',
                         borderRadius: 6, padding: '4px 10px', color: '#a78bfa', fontSize: '0.7rem', cursor: 'pointer'

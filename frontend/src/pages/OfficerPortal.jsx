@@ -195,7 +195,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
         <div>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <ShieldCheck size={28} color="#10b981" /> Municipal Officer Control Center
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
@@ -218,7 +218,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '24px' }}>
           <div className="glass-panel" style={{ padding: '18px' }}>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Total Complaints in DB</p>
-            <p style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff' }}>{stats.total_complaints}</p>
+            <p style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-main)' }}>{stats.total_complaints}</p>
             <span style={{ fontSize: '0.72rem', color: '#818cf8' }}>NYC 311 + Live Submissions</span>
           </div>
 
@@ -495,7 +495,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
         <div className="glass-panel" style={{ padding: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
             <div>
-              <h3 style={{ fontSize: '1.15rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <h3 style={{ fontSize: '1.15rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Camera size={18} color="#06b6d4" /> Citizen Evidence Verification & Geo-Tag Inspection Hub
               </h3>
               <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
@@ -535,7 +535,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
                             style={{ width: '64px', height: '48px', objectFit: 'cover', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }}
                           />
                         ) : (
-                          <div style={{ width: '64px', height: '48px', background: '#1e293b', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <div style={{ width: '64px', height: '48px', background: 'var(--panel-bg)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Video size={18} color="#94a3b8" />
                           </div>
                         )}
@@ -550,7 +550,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
                       </div>
                     </td>
                     <td>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: '#cbd5e1' }}>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
                         {ev.complaint_id}
                       </span>
                     </td>
@@ -645,7 +645,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
       {/* Validated Feedback Log Sub-Tab */}
       {activeSubTab === 'validated' && (
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <h3 style={{ fontSize: '1.1rem', color: '#fff', marginBottom: '14px' }}>
+          <h3 style={{ fontSize: '1.1rem', color: 'var(--text-main)', marginBottom: '14px' }}>
             Officer-Validated Training Candidate Log
           </h3>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
@@ -676,7 +676,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
                     <td style={{ fontFamily: 'var(--font-mono)', color: '#818cf8', fontSize: '0.8rem' }}>{fb.complaint_id}</td>
                     <td><span className="badge badge-amber">{fb.original_prediction}</span></td>
                     <td><span className="badge badge-green">{fb.correct_category}</span></td>
-                    <td style={{ fontSize: '0.85rem', color: '#fff' }}>{fb.validated_by}</td>
+                    <td style={{ fontSize: '0.85rem', color: 'var(--text-main)' }}>{fb.validated_by}</td>
                     <td style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>{new Date(fb.validation_date).toLocaleString()}</td>
                     <td style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{fb.notes || '-'}</td>
                   </tr>
@@ -700,9 +700,9 @@ export default function OfficerPortal({ user, onOpenAuth }) {
           zIndex: 100,
           padding: '20px'
         }}>
-          <div className="glass-panel" style={{ width: '100%', maxWidth: '520px', padding: '24px', background: '#0f172a' }}>
+          <div className="glass-panel" style={{ width: '100%', maxWidth: '520px', padding: '24px', background: 'var(--bg-surface)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-              <h3 style={{ fontSize: '1.15rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <h3 style={{ fontSize: '1.15rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <CheckCircle2 size={18} color="#10b981" /> Validate / Correct AI Prediction
               </h3>
               <button className="btn btn-outline" style={{ padding: '4px 8px' }} onClick={() => setValidatingComplaint(null)}>
@@ -712,7 +712,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
 
             <div style={{ background: 'rgba(255,255,255,0.03)', padding: '12px', borderRadius: '8px', marginBottom: '16px', border: '1px solid var(--border-color)' }}>
               <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Complaint ID: {validatingComplaint.complaint_id}</p>
-              <p style={{ fontSize: '0.88rem', color: '#fff', marginTop: '4px' }}>"{validatingComplaint.original_text}"</p>
+              <p style={{ fontSize: '0.88rem', color: 'var(--text-main)', marginTop: '4px' }}>"{validatingComplaint.original_text}"</p>
             </div>
 
             <form onSubmit={handleValidateSubmit}>
@@ -783,14 +783,14 @@ export default function OfficerPortal({ user, onOpenAuth }) {
           zIndex: 110,
           padding: '20px'
         }}>
-          <div className="glass-panel" style={{ width: '100%', maxWidth: '920px', maxHeight: '90vh', overflowY: 'auto', padding: '26px', background: '#090d16', border: '1px solid rgba(6, 182, 212, 0.4)' }}>
+          <div className="glass-panel" style={{ width: '100%', maxWidth: '920px', maxHeight: '90vh', overflowY: 'auto', padding: '26px', background: 'var(--bg-surface)', border: '1px solid rgba(6, 182, 212, 0.4)' }}>
             
             {/* Modal Header */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '14px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', borderBottom: '1px solid var(--border-color)', paddingBottom: '14px' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <Camera size={22} color="#06b6d4" />
-                  <h2 style={{ fontSize: '1.25rem', color: '#fff', margin: 0, fontWeight: 800 }}>
+                  <h2 style={{ fontSize: '1.25rem', color: 'var(--text-main)', margin: 0, fontWeight: 800 }}>
                     Evidence Truth Analysis & Location Verification
                   </h2>
                 </div>
@@ -806,7 +806,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
             {/* Complaint Text Context */}
             <div style={{ background: 'rgba(255,255,255,0.03)', padding: '12px 16px', borderRadius: '8px', marginBottom: '20px', border: '1px solid var(--border-color)' }}>
               <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Reported Problem:</span>
-              <p style={{ fontSize: '0.9rem', color: '#fff', margin: '4px 0 0', fontStyle: 'italic' }}>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-main)', margin: '4px 0 0', fontStyle: 'italic' }}>
                 "{inspectingEvidenceComplaint.original_text}"
               </p>
             </div>
@@ -819,7 +819,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
             ) : inspectingEvidenceList.length === 0 ? (
               <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
                 <Camera size={36} color="#64748b" style={{ margin: '0 auto 12px' }} />
-                <h4 style={{ color: '#fff', marginBottom: '6px' }}>No Evidence Uploaded</h4>
+                <h4 style={{ color: 'var(--text-main)', marginBottom: '6px' }}>No Evidence Uploaded</h4>
                 <p style={{ fontSize: '0.85rem' }}>The citizen has not attached a photo or video to this complaint yet.</p>
                 <button className="btn btn-secondary" onClick={() => setInspectingEvidenceComplaint(null)} style={{ marginTop: '14px' }}>
                   Close Inspector
@@ -881,7 +881,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
 
                           {lat && lon ? (
                             <div>
-                              <p style={{ fontSize: '0.82rem', color: '#fff', margin: '0 0 4px', fontWeight: 600 }}>
+                              <p style={{ fontSize: '0.82rem', color: 'var(--text-main)', margin: '0 0 4px', fontWeight: 600 }}>
                                 Coordinates: {lat.toFixed(5)}° N, {lon.toFixed(5)}° E
                               </p>
                               <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: '0 0 10px' }}>
@@ -929,7 +929,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                               <Sparkles size={16} color="#c084fc" />
-                              <h4 style={{ fontSize: '0.92rem', color: '#fff', margin: 0 }}>Computer Vision Analysis</h4>
+                              <h4 style={{ fontSize: '0.92rem', color: 'var(--text-main)', margin: 0 }}>Computer Vision Analysis</h4>
                             </div>
                             <span className={`badge ${
                               ev.evidence_assessment === 'SUPPORTS_COMPLAINT' ? 'badge-green' :
@@ -942,7 +942,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
                           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
                             <div style={{ background: 'rgba(0,0,0,0.25)', padding: '10px', borderRadius: '6px' }}>
                               <span style={{ fontSize: '0.68rem', color: 'var(--text-dim)', display: 'block' }}>Visual Category Match</span>
-                              <span style={{ fontSize: '0.88rem', color: '#fff', fontWeight: 700 }}>{ev.top_predicted_category}</span>
+                              <span style={{ fontSize: '0.88rem', color: 'var(--text-main)', fontWeight: 700 }}>{ev.top_predicted_category}</span>
                             </div>
                             <div style={{ background: 'rgba(0,0,0,0.25)', padding: '10px', borderRadius: '6px' }}>
                               <span style={{ fontSize: '0.68rem', color: 'var(--text-dim)', display: 'block' }}>Visual Confidence</span>
@@ -984,7 +984,7 @@ export default function OfficerPortal({ user, onOpenAuth }) {
                           borderRadius: '10px',
                           padding: '16px'
                         }}>
-                          <h4 style={{ fontSize: '0.92rem', color: '#fff', margin: '0 0 6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <h4 style={{ fontSize: '0.92rem', color: 'var(--text-main)', margin: '0 0 6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                             <ShieldCheck size={16} color="#10b981" /> Municipal Officer Truth Verification
                           </h4>
                           <p style={{ fontSize: '0.74rem', color: 'var(--text-muted)', margin: '0 0 14px' }}>

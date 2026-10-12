@@ -53,6 +53,9 @@ def get_resolution_stats(officer: dict = Depends(require_officer)):
     """Computes resolution monitoring KPI metrics."""
     alerts_col = get_collection("resolution_alerts")
     all_alerts = alerts_col.find()
+    if not all_alerts:
+        resolution_monitor_engine._auto_seed_demo_alerts()
+        all_alerts = alerts_col.find()
 
     statuses = Counter(a.get("status", "PENDING_VERIFICATION") for a in all_alerts)
     categories = Counter(a.get("category", "General") for a in all_alerts)

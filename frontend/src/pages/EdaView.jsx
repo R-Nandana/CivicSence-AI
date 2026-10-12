@@ -52,7 +52,7 @@ export default function EdaView() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '24px' }}>
         <div className="glass-panel" style={{ padding: '18px' }}>
           <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Total Clean Records</p>
-          <p style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff' }}>{shape.total_records}</p>
+          <p style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-main)' }}>{shape.total_records}</p>
           <span style={{ fontSize: '0.72rem', color: '#60a5fa' }}>{shape.total_columns} Features Extracted</span>
         </div>
 
@@ -80,7 +80,7 @@ export default function EdaView() {
         
         {/* Category Distribution Chart */}
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <h3 style={{ fontSize: '1.05rem', color: '#fff', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <h3 style={{ fontSize: '1.05rem', color: 'var(--text-main)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <BarChart3 size={18} color="#60a5fa" /> Target Category Distribution
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -90,7 +90,7 @@ export default function EdaView() {
               return (
                 <div key={cat}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '4px' }}>
-                    <span style={{ color: '#fff', fontWeight: 500 }}>{cat}</span>
+                    <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>{cat}</span>
                     <span style={{ color: 'var(--text-muted)' }}>{count} ({pct}%)</span>
                   </div>
                   <div style={{ height: '8px', background: 'rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'hidden' }}>
@@ -104,7 +104,7 @@ export default function EdaView() {
 
         {/* Complaint Length Histogram */}
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <h3 style={{ fontSize: '1.05rem', color: '#fff', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <h3 style={{ fontSize: '1.05rem', color: 'var(--text-main)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <FileText size={18} color="#f59e0b" /> Complaint Length Histogram (Words)
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
@@ -113,7 +113,7 @@ export default function EdaView() {
               return (
                 <div key={binName}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '4px' }}>
-                    <span style={{ color: '#fff' }}>{binName}</span>
+                    <span style={{ color: 'var(--text-main)' }}>{binName}</span>
                     <span style={{ color: 'var(--text-muted)' }}>{count} complaints</span>
                   </div>
                   <div style={{ height: '8px', background: 'rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'hidden' }}>

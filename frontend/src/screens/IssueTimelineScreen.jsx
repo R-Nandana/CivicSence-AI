@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Clock, FileText, CheckCircle2, AlertTriangle, Shield, 
   Image as ImageIcon, Search, ArrowRight, User 
@@ -56,17 +56,17 @@ export default function IssueTimelineScreen({ selectedComplaintId }) {
   const getEventIcon = (type) => {
     switch (type) {
       case 'SUBMISSION':
-        return { icon: FileText, color: '#60a5fa', bg: 'rgba(37, 99, 235, 0.2)' };
+        return { icon: FileText, color: 'var(--primary-light)', bg: 'rgba(37, 99, 235, 0.2)' };
       case 'STATUS_CHANGE':
-        return { icon: Shield, color: '#38bdf8', bg: 'rgba(6, 182, 212, 0.2)' };
+        return { icon: Shield, color: 'var(--secondary)', bg: 'rgba(6, 182, 212, 0.2)' };
       case 'EVIDENCE_UPLOAD':
-        return { icon: ImageIcon, color: '#34d399', bg: 'rgba(16, 185, 129, 0.2)' };
+        return { icon: ImageIcon, color: 'var(--accent-green)', bg: 'rgba(16, 185, 129, 0.2)' };
       case 'OFFICER_VALIDATION':
         return { icon: CheckCircle2, color: '#c084fc', bg: 'rgba(168, 85, 247, 0.2)' };
       case 'INCONSISTENCY_FLAG':
         return { icon: AlertTriangle, color: '#f87171', bg: 'rgba(239, 68, 68, 0.2)' };
       default:
-        return { icon: Clock, color: '#fbbf24', bg: 'rgba(245, 158, 11, 0.2)' };
+        return { icon: Clock, color: 'var(--accent-amber)', bg: 'rgba(245, 158, 11, 0.2)' };
     }
   };
 
@@ -77,11 +77,11 @@ export default function IssueTimelineScreen({ selectedComplaintId }) {
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
           <span className="badge badge-blue">Audit Log</span>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
             Issue Evolution & Resolution Audit Timeline
           </h1>
         </div>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           Chronological audit trail tracking the complete lifecycle: citizen report, AI classification, officer validation,
           evidence submissions, resolution claims, and potential follow-up inconsistency alerts.
         </p>
@@ -89,7 +89,7 @@ export default function IssueTimelineScreen({ selectedComplaintId }) {
 
       {/* Complaint Selector Bar */}
       <div className="glass-panel" style={{ padding: '18px 24px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
-        <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#cbd5e1' }}>Select Issue to Track:</span>
+        <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-muted)' }}>Select Issue to Track:</span>
         <select
           value={complaintId}
           onChange={(e) => {
@@ -121,23 +121,23 @@ export default function IssueTimelineScreen({ selectedComplaintId }) {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
-                <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, color: '#60a5fa', fontSize: '1.1rem' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--primary-light)', fontSize: '1.1rem' }}>
                   {complaintDetails.complaint_id}
                 </span>
                 <span className="badge badge-purple">{complaintDetails.predicted_category}</span>
                 <span className="badge badge-blue">{complaintDetails.status}</span>
               </div>
-              <p style={{ fontSize: '0.95rem', color: '#f1f5f9', marginTop: '6px' }}>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', marginTop: '6px' }}>
                 "{complaintDetails.original_text}"
               </p>
-              <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '6px' }}>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '6px' }}>
                 Location: <strong>{complaintDetails.location}</strong> | Submitted: {complaintDetails.created_at}
               </div>
             </div>
 
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>AI Confidence</div>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#34d399' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>AI Confidence</div>
+              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--accent-green)' }}>
                 {(complaintDetails.confidence * 100).toFixed(1)}%
               </div>
             </div>
@@ -147,14 +147,14 @@ export default function IssueTimelineScreen({ selectedComplaintId }) {
 
       {/* Vertical Interactive Timeline */}
       <div className="glass-panel" style={{ padding: '32px 28px' }}>
-        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#fff', marginBottom: '24px' }}>
+        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '24px' }}>
           Chronological Event Progression ({timeline.length} Events)
         </h3>
 
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '40px', color: '#94a3b8' }}>Building event progression...</div>
+          <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>Building event progression...</div>
         ) : timeline.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>
+          <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-dim)' }}>
             No timeline events recorded yet for this complaint.
           </div>
         ) : (
@@ -195,26 +195,26 @@ export default function IssueTimelineScreen({ selectedComplaintId }) {
 
                   {/* Event Content Card */}
                   <div style={{
-                    background: 'rgba(15, 23, 42, 0.6)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    background: 'var(--panel-bg)',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '12px',
                     padding: '16px 20px',
                     marginLeft: '8px'
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                      <span style={{ fontWeight: 700, color: '#fff', fontSize: '0.95rem' }}>
+                      <span style={{ fontWeight: 700, color: 'var(--text-main)', fontSize: '0.95rem' }}>
                         {evt.title}
                       </span>
-                      <span style={{ fontSize: '0.72rem', color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+                      <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                         {evt.timestamp ? new Date(evt.timestamp).toLocaleString() : 'Timestamp'}
                       </span>
                     </div>
 
-                    <p style={{ fontSize: '0.85rem', color: '#cbd5e1', lineHeight: 1.5, marginBottom: '8px' }}>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: '8px' }}>
                       {evt.description}
                     </p>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.72rem', color: '#94a3b8' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                       <User size={12} color="#64748b" />
                       <span>Actor: <strong>{evt.actor_name || 'System AI'}</strong> ({evt.actor_role})</span>
                     </div>
@@ -229,3 +229,4 @@ export default function IssueTimelineScreen({ selectedComplaintId }) {
     </div>
   );
 }
+

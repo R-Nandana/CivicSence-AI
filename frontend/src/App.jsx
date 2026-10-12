@@ -13,7 +13,7 @@ import AuthModal from './pages/AuthModal';
 // Authentication & Split-Screen Login Page
 import LoginPage from './pages/LoginPage';
 
-// 21-Screen Intelligence Suite Components
+// Intelligence Workspace Components
 import Sidebar from './components/Sidebar';
 import TopNav from './components/TopNav';
 import CitizenDashboardScreen from './screens/CitizenDashboardScreen';
@@ -38,19 +38,33 @@ import EdaDashboardScreen from './screens/EdaDashboardScreen';
 export default function App() {
   const [user, setUser] = useState(null);
   
-  // View Mode: 'classic' (User's 1st UI) vs 'suite' (21-Screen Intelligence Suite)
-  const [viewMode, setViewMode] = useState('classic');
+  // Theme state: 'dark' | 'light'
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('civicsense_theme') || 'dark';
+  });
+
+  // View Mode: 'suite' (Default Workspace) vs 'classic' (Classic Portal)
+  const [viewMode, setViewMode] = useState('suite');
   
   // 1st UI Navigation Tab
-  const [classicTab, setClassicTab] = useState('officer');
+  const [classicTab, setClassicTab] = useState('complaints');
   
-  // 21-Screen Suite Active Screen
+  // Suite Active Screen
   const [activeScreen, setActiveScreen] = useState('citizen-dashboard');
   const [selectedComplaintId, setSelectedComplaintId] = useState(null);
   
   // Auth Modal State
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalRole, setAuthModalRole] = useState('citizen');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('civicsense_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   useEffect(() => {
     // Check local storage for authenticated session
@@ -121,24 +135,25 @@ export default function App() {
     setAuthModalOpen(true);
   };
 
-  // If user is not logged in, render the Split-Screen Login Page (with Prominent City Picture)
+  // If user is not logged in, render the Split-Screen Login Page
   if (!user) {
     return (
       <LoginPage
         onLoginSuccess={handleLoginSuccess}
         onExploreEda={() => {
-          // Guest Explore Mode
           const guest = { name: "Guest Reviewer", email: "guest@civicsense.org", role: "officer" };
           setUser(guest);
-          setViewMode('classic');
-          setClassicTab('eda');
+          setViewMode('suite');
+          setActiveScreen('eda-dashboard');
         }}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
     );
   }
 
   // =========================================================================
-  // MODE 1: USER'S 1ST CLASSIC PORTAL UI (PRESERVED 100% UNCHANGED)
+  // MODE 1: CLASSIC PORTAL UI
   // =========================================================================
   if (viewMode === 'classic') {
     const renderClassicContent = () => {
@@ -168,8 +183,7 @@ export default function App() {
     };
 
     return (
-      <div style={{ minHeight: '100vh', background: 'var(--bg-dark, #090d16)', color: 'var(--text-main, #f8fafc)', display: 'flex', flexDirection: 'column' }}>
-        {/* 1st UI Top Navbar with View Switcher */}
+      <div style={{ minHeight: '100vh', background: 'var(--bg-dark)', color: 'var(--text-main)', display: 'flex', flexDirection: 'column' }}>
         <Navbar
           user={user}
           onLogout={handleLogout}
@@ -177,14 +191,14 @@ export default function App() {
           activeTab={classicTab}
           setActiveTab={setClassicTab}
           onToggleViewMode={() => setViewMode('suite')}
+          theme={theme}
+          onToggleTheme={toggleTheme}
         />
 
-        {/* 1st UI Main Content */}
         <main style={{ flex: 1, padding: '24px', maxWidth: '1400px', width: '100%', margin: '0 auto' }}>
           {renderClassicContent()}
         </main>
 
-        {/* Auth Modal for 1st UI */}
         <AuthModal
           isOpen={authModalOpen}
           onClose={() => setAuthModalOpen(false)}
@@ -196,16 +210,23 @@ export default function App() {
   }
 
   // =========================================================================
-  // MODE 2: 21-SCREEN INTELLIGENCE SUITE UI (NEW ADVANCED MODULES)
+  // MODE 2: ROLE-SEPARATED INTELLIGENCE WORKSPACE UI
   // =========================================================================
   const renderSuiteScreen = () => {
-    // Role protection: Citizens cannot access internal municipal officer screens
+    // ── ROLE PROTECTION: Citizens cannot access internal officer screens ──
     const officerOnlyScreens = [
       'admin-dashboard',
       'related-complaints',
       'resolution-alerts',
       'human-validation',
-      'eda-dashboard'
+      'eda-dashboard',
+      'qa-analytics',
+      'text-classification',
+      'ner-results',
+      'speech-results',
+      'translation',
+      'image-analysis',
+      'video-analysis'
     ];
     if (user?.role === 'citizen' && officerOnlyScreens.includes(activeScreen)) {
       return (
@@ -219,23 +240,19 @@ export default function App() {
       );
     }
 
-    switch (activeScreen) {
-      // 0. Authentication Screen
-      case 'login':
-        return (
-          <LoginPage
-            onLoginSuccess={(u) => {
-              handleLoginSuccess(u);
-              setActiveScreen(u.role === 'officer' ? 'admin-dashboard' : 'citizen-dashboard');
-            }}
-            onExploreEda={() => {
-              const guest = { name: "Guest Reviewer", email: "guest@civicsense.org", role: "officer" };
-              setUser(guest);
-              setActiveScreen('eda-dashboard');
-            }}
-          />
-        );
+    // ── ROLE PROTECTION: Officers do not file complaints or view citizen filing ──
+    const citizenOnlyScreens = [
+      'citizen-dashboard',
+      'text-submission',
+      'voice-record',
+      'image-upload',
+      'video-upload'
+    ];
+    if (user?.role === 'officer' && citizenOnlyScreens.includes(activeScreen)) {
+      return <AdminAnalyticsScreen />;
+    }
 
+    switch (activeScreen) {
       // 1. Citizen Screens
       case 'citizen-dashboard':
         return (
@@ -265,32 +282,18 @@ export default function App() {
             }}
           />
         );
-
-      // 2. Computer Vision Evidence Screens
       case 'image-upload':
-      case 'image-analysis':
         return <ImageEvidenceScreen initialComplaintId={selectedComplaintId} user={user} />;
       case 'video-upload':
-      case 'video-analysis':
         return <VideoEvidenceScreen user={user} />;
-
-      // 3. NLP Concepts 1 - 6
-      case 'text-classification':
-        return <TextClassificationScreen />;
-      case 'ner-results':
-        return <NerResultsScreen />;
+      case 'issue-timeline':
+        return <IssueTimelineScreen selectedComplaintId={selectedComplaintId} />;
       case 'multilingual':
         return <MultilingualScreen onNavigate={setActiveScreen} />;
-      case 'translation':
-        return <TranslationResultsScreen />;
-      case 'speech-results':
-        return <SpeechResultsScreen />;
       case 'qa-interface':
         return <DatabaseQaScreen onNavigate={setActiveScreen} />;
-      case 'qa-analytics':
-        return <QaAnalyticsScreen />;
 
-      // 4. Governance & Core Differentiators
+      // 2. Municipal Officer Screens
       case 'admin-dashboard':
         return <AdminAnalyticsScreen />;
       case 'related-complaints':
@@ -303,23 +306,35 @@ export default function App() {
             }}
           />
         );
-      case 'issue-timeline':
-        return <IssueTimelineScreen selectedComplaintId={selectedComplaintId} />;
       case 'resolution-alerts':
         return <ResolutionAlertsScreen user={user} />;
       case 'human-validation':
         return <HumanValidationScreen user={user} />;
+      case 'image-analysis':
+        return <ImageEvidenceScreen initialComplaintId={selectedComplaintId} user={user} />;
+      case 'video-analysis':
+        return <VideoEvidenceScreen user={user} />;
       case 'eda-dashboard':
         return <EdaDashboardScreen />;
+      case 'text-classification':
+        return <TextClassificationScreen />;
+      case 'ner-results':
+        return <NerResultsScreen />;
+      case 'speech-results':
+        return <SpeechResultsScreen />;
+      case 'translation':
+        return <TranslationResultsScreen />;
+      case 'qa-analytics':
+        return <QaAnalyticsScreen />;
 
       default:
-        return <CitizenDashboardScreen onNavigate={setActiveScreen} />;
+        return user?.role === 'officer' ? <AdminAnalyticsScreen /> : <CitizenDashboardScreen onNavigate={setActiveScreen} />;
     }
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#090d16', color: '#f8fafc' }}>
-      {/* Dark Navy Sidebar Navigation */}
+    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-dark)', color: 'var(--text-main)', transition: 'background 0.25s ease, color 0.25s ease' }}>
+      {/* Role-Specific Interactive Sidebar Navigation */}
       <Sidebar
         activeScreen={activeScreen}
         setActiveScreen={setActiveScreen}
@@ -336,31 +351,34 @@ export default function App() {
           onSwitchRole={handleSwitchRole}
           onLogout={handleLogout}
           onToggleViewMode={() => setViewMode('classic')}
+          theme={theme}
+          onToggleTheme={toggleTheme}
         />
 
         {/* Scrollable Screen Content Area */}
-        <main style={{ flex: 1, background: '#090d16', overflowY: 'auto' }}>
+        <main style={{ flex: 1, background: 'var(--bg-dark)', overflowY: 'auto', transition: 'background 0.25s ease' }}>
           {renderSuiteScreen()}
         </main>
 
-        {/* Academic Footer */}
+        {/* Smart City Footer */}
         <footer style={{
-          borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-          padding: '16px 28px',
-          background: 'rgba(9, 13, 22, 0.98)',
+          borderTop: '1px solid var(--border-color)',
+          padding: '14px 28px',
+          background: 'var(--topbar-bg)',
           fontSize: '0.8rem',
-          color: '#64748b',
+          color: 'var(--text-dim)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: '10px'
+          gap: '10px',
+          transition: 'background 0.25s ease'
         }}>
           <div>
-            <strong style={{ color: '#fff' }}>CivicSense AI</strong> — NLP-Based Civic Complaint Intelligence & Resolution Monitoring System
+            <strong style={{ color: 'var(--text-main)' }}>CivicSense AI</strong> — Smart City Urban Grievance Intelligence & Resolution System
           </div>
-          <div>
-            Powered by <strong>TF-IDF Softmax Classifier</strong> + <strong>NER</strong> + <strong>Acoustics & WER</strong> + <strong>CV Keyframes</strong> + <strong>Database QA</strong>
+          <div style={{ fontSize: '0.75rem' }}>
+            {user?.role === 'officer' ? 'Municipal Officer Active Session' : 'Citizen Grievance Services'}
           </div>
         </footer>
       </div>

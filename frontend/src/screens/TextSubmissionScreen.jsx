@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { 
   Send, Sparkles, MapPin, AlertCircle, CheckCircle2, 
   HelpCircle, Layers, Search, ArrowRight 
@@ -41,6 +41,8 @@ const SAMPLES = [
 export default function TextSubmissionScreen({ onNavigate, onComplaintCreated }) {
   const [complaintText, setComplaintText] = useState('');
   const [location, setLocation] = useState('');
+  const [inputLanguage, setInputLanguage] = useState('auto');
+  const [translatedPreview, setTranslatedPreview] = useState(null);
   const [previewData, setPreviewData] = useState(null);
   const [previewLoading, setPreviewLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -57,6 +59,16 @@ export default function TextSubmissionScreen({ onNavigate, onComplaintCreated })
     try {
       const res = await api.predict(complaintText, location);
       setPreviewData(res);
+      if (inputLanguage !== 'English' && inputLanguage !== 'auto') {
+        try {
+          const trans = await api.translateLLM(complaintText, inputLanguage, 'English');
+          setTranslatedPreview(trans);
+        } catch(e) {
+          console.warn('Preview translation error', e);
+        }
+      } else {
+        setTranslatedPreview(null);
+      }
     } catch (err) {
       setErrorMsg(err.message || 'AI prediction failed.');
     } finally {
@@ -96,10 +108,10 @@ export default function TextSubmissionScreen({ onNavigate, onComplaintCreated })
       
       {/* Header */}
       <div style={{ marginBottom: '24px' }}>
-        <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff', marginBottom: '6px' }}>
+        <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '6px' }}>
           Submit New Civic Complaint
         </h1>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           Describe the physical municipal problem. The CivicSense NLP pipeline will classify the issue into 1 of 8 categories,
           extract named entities, check geographic verifiability, and link related cluster timelines.
         </p>
@@ -107,7 +119,7 @@ export default function TextSubmissionScreen({ onNavigate, onComplaintCreated })
 
       {/* Quick Test Samples */}
       <div style={{ marginBottom: '24px' }}>
-        <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '10px' }}>
+        <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '10px' }}>
           Quick Academic Test Scenarios (1-Click Fill)
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -141,7 +153,7 @@ export default function TextSubmissionScreen({ onNavigate, onComplaintCreated })
             <CheckCircle2 size={32} color="#34d399" />
           </div>
 
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', marginBottom: '8px' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '8px' }}>
             Complaint Successfully Registered!
           </h2>
 
@@ -154,7 +166,7 @@ export default function TextSubmissionScreen({ onNavigate, onComplaintCreated })
             fontFamily: 'var(--font-mono)',
             fontSize: '1rem',
             fontWeight: 800,
-            color: '#60a5fa',
+            color: 'var(--primary-light)',
             marginBottom: '18px'
           }}>
             {submittedResult.complaint_id}
@@ -163,26 +175,26 @@ export default function TextSubmissionScreen({ onNavigate, onComplaintCreated })
           <div style={{
             maxWidth: '600px',
             margin: '0 auto 24px auto',
-            background: 'rgba(15, 23, 42, 0.6)',
+            background: 'var(--panel-bg)',
             padding: '16px 20px',
             borderRadius: '12px',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
+            border: '1px solid var(--border-color)',
             textAlign: 'left'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <span style={{ color: '#94a3b8', fontSize: '0.82rem' }}>Category:</span>
-              <span style={{ fontWeight: 700, color: '#fff' }}>{submittedResult.predicted_category}</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>Category:</span>
+              <span style={{ fontWeight: 700, color: 'var(--text-main)' }}>{submittedResult.predicted_category}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <span style={{ color: '#94a3b8', fontSize: '0.82rem' }}>AI Confidence:</span>
-              <span style={{ fontWeight: 700, color: '#34d399' }}>{(submittedResult.confidence * 100).toFixed(1)}%</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>AI Confidence:</span>
+              <span style={{ fontWeight: 700, color: 'var(--accent-green)' }}>{(submittedResult.confidence * 100).toFixed(1)}%</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <span style={{ color: '#94a3b8', fontSize: '0.82rem' }}>Location:</span>
-              <span style={{ fontWeight: 600, color: '#cbd5e1' }}>{submittedResult.location}</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>Location:</span>
+              <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{submittedResult.location}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ color: '#94a3b8', fontSize: '0.82rem' }}>Status:</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>Status:</span>
               <span className="badge badge-amber">{submittedResult.status}</span>
             </div>
           </div>
@@ -221,26 +233,56 @@ export default function TextSubmissionScreen({ onNavigate, onComplaintCreated })
           <div className="glass-panel" style={{ padding: '24px' }}>
             <form onSubmit={handleSubmit}>
               <div style={{ marginBottom: '18px' }}>
-                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#cbd5e1', marginBottom: '8px' }}>
-                  Problem Description *
-                </label>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexWrap: 'wrap', gap: 6 }}>
+                  <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-muted)' }}>
+                    Problem Description *
+                  </label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>🌐 Language:</span>
+                    <select
+                      value={inputLanguage}
+                      onChange={(e) => setInputLanguage(e.target.value)}
+                      style={{
+                        padding: '4px 10px',
+                        fontSize: '0.76rem',
+                        borderRadius: '6px',
+                        background: 'var(--input-bg)',
+                        color: 'var(--primary)',
+                        border: '1px solid var(--border-color)',
+                        fontWeight: 600
+                      }}
+                    >
+                      <option value="auto">✨ Auto-Detect</option>
+                      <option value="Tamil">à®¤à®®à®¿à®´à¯ (Tamil)</option>
+                      <option value="Tanglish">Tanglish (Tamil in Roman)</option>
+                      <option value="Hindi">à¤¹à¤¿à¤¨à¥à¤¦à¥€ (Hindi)</option>
+                      <option value="Telugu">à°¤à±†à°²à±à°—à± (Telugu)</option>
+                      <option value="Kannada">à²•à²¨à³à²¨à²¡ (Kannada)</option>
+                      <option value="Malayalam">മലയാളം (Malayalam)</option>
+                      <option value="Bengali">বাংলা (Bengali)</option>
+                      <option value="Spanish">Español (Spanish)</option>
+                      <option value="French">Français (French)</option>
+                      <option value="English">English</option>
+                    </select>
+                  </div>
+                </div>
                 <textarea
                   rows={5}
                   required
                   value={complaintText}
                   onChange={(e) => setComplaintText(e.target.value)}
-                  placeholder="e.g., The streetlight near the bus stand has not worked for four days..."
+                  placeholder="e.g., The streetlight near the bus stand has not worked for four days (or in Tamil, Hindi, Tanglish, etc.)..."
                   className="textarea-field"
                   style={{ resize: 'vertical' }}
                 />
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: '#64748b' }}>
-                  <span>Supports English, Tamil & Tanglish</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.75rem', color: 'var(--text-dim)' }}>
+                  <span>Multilingual Enabled: Indian Regional & Global Languages</span>
                   <span>{complaintText.length} characters</span>
                 </div>
               </div>
 
               <div style={{ marginBottom: '22px' }}>
-                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#cbd5e1', marginBottom: '8px' }}>
+                <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '8px' }}>
                   Location / Nearby Landmark (Optional)
                 </label>
                 <div style={{ position: 'relative' }}>
@@ -254,7 +296,7 @@ export default function TextSubmissionScreen({ onNavigate, onComplaintCreated })
                     style={{ paddingLeft: '40px' }}
                   />
                 </div>
-                <span style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '4px', display: 'block' }}>
+                <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)', marginTop: '4px', display: 'block' }}>
                   If left empty, CivicSense NER will automatically attempt to extract the landmark from your text.
                 </span>
               </div>
@@ -301,28 +343,28 @@ export default function TextSubmissionScreen({ onNavigate, onComplaintCreated })
 
           {/* Right: Live NLP Preview */}
           <div className="glass-panel" style={{ padding: '24px' }}>
-            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Sparkles size={18} color="#60a5fa" /> Real-Time NLP Intelligence Preview
             </h3>
 
             {previewLoading ? (
-              <div style={{ textAlign: 'center', padding: '40px 0', color: '#94a3b8' }}>
+              <div style={{ textAlign: 'center', padding: '40px 0', color: 'var(--text-muted)' }}>
                 <div style={{ marginBottom: '8px' }}>Running TF-IDF + NER Models...</div>
               </div>
             ) : previewData ? (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.06)' }}>
-                  <span style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Predicted Category</span>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#60a5fa', marginTop: '2px' }}>
+                <div style={{ background: 'var(--panel-bg)', padding: '14px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Predicted Category</span>
+                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--primary)', marginTop: '2px' }}>
                     {previewData.predicted_category}
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: '#34d399', fontWeight: 600 }}>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--accent-green)', fontWeight: 600 }}>
                     Confidence Score: {(previewData.confidence * 100).toFixed(1)}%
                   </div>
                 </div>
 
-                <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.06)' }}>
-                  <span style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Extracted Civic Entities</span>
+                <div style={{ background: 'var(--panel-bg)', padding: '14px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Extracted Civic Entities</span>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '8px' }}>
                     {previewData.entities?.length > 0 ? (
                       previewData.entities.map((e, idx) => (
@@ -331,20 +373,36 @@ export default function TextSubmissionScreen({ onNavigate, onComplaintCreated })
                         </span>
                       ))
                     ) : (
-                      <span style={{ fontSize: '0.78rem', color: '#64748b' }}>No explicit entities isolated</span>
+                      <span style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>No explicit entities isolated</span>
                     )}
                   </div>
                 </div>
 
-                <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.06)' }}>
-                  <span style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Detected Language</span>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#f1f5f9', marginTop: '2px' }}>
-                    {previewData.language || 'English'}
+                <div style={{ background: 'var(--panel-bg)', padding: '14px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Language</span>
+                  <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--secondary)', marginTop: '2px' }}>
+                    {inputLanguage !== 'auto' ? inputLanguage : (previewData.language || 'English')}
                   </div>
                 </div>
+
+                {translatedPreview && (
+                  <div style={{
+                    background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(14, 165, 233, 0.12) 100%)',
+                    padding: '14px',
+                    borderRadius: '10px',
+                    border: '1px solid rgba(99, 102, 241, 0.35)'
+                  }}>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--secondary)', textTransform: 'uppercase', fontWeight: 800 }}>
+                      🌐 English Translation For Officers
+                    </span>
+                    <p style={{ margin: '4px 0 0', fontSize: '0.92rem', color: 'var(--text-main)', fontWeight: 600, lineHeight: 1.5 }}>
+                      "{translatedPreview.translated_text}"
+                    </p>
+                  </div>
+                )}
               </div>
             ) : (
-              <div style={{ padding: '30px 10px', textAlign: 'center', color: '#64748b', fontSize: '0.85rem' }}>
+              <div style={{ padding: '30px 10px', textAlign: 'center', color: 'var(--text-dim)', fontSize: '0.85rem' }}>
                 <Layers size={32} color="#475569" style={{ margin: '0 auto 10px auto' }} />
                 Click "Test AI Preview" or type a description above to see instant classification and entity extraction.
               </div>
@@ -357,3 +415,4 @@ export default function TextSubmissionScreen({ onNavigate, onComplaintCreated })
     </div>
   );
 }
+

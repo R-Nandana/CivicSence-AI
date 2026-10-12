@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Activity, Clock, Database, Search, ArrowRight, RefreshCw, CheckCircle2 } from 'lucide-react';
 import { api } from '../services/api';
 
@@ -33,11 +33,11 @@ export default function QaAnalyticsScreen() {
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
           <span className="badge badge-cyan">Concept 6 Analytics</span>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
             QA Query Performance & Audit Logs
           </h1>
         </div>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           Audits deterministic database query latencies, detected question intents, matched record counts, and query timestamps.
         </p>
       </div>
@@ -50,34 +50,34 @@ export default function QaAnalyticsScreen() {
         marginBottom: '28px'
       }}>
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase' }}>Total Queries Executed</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', marginTop: '4px' }}>{logs.length || 5}</div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Logged in qa_query_logs</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Total Queries Executed</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '4px' }}>{logs.length || 5}</div>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Logged in qa_query_logs</span>
         </div>
 
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase' }}>Avg Query Execution Time</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#34d399', marginTop: '4px' }}>{avgLatency} ms</div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Sub-millisecond index scans</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Avg Query Execution Time</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-green)', marginTop: '4px' }}>{avgLatency} ms</div>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Sub-millisecond index scans</span>
         </div>
 
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase' }}>Fabrication Check</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#38bdf8', marginTop: '4px' }}>0% Fabricated</div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Strict database grounding</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Fabrication Check</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--secondary)', marginTop: '4px' }}>0% Fabricated</div>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Strict database grounding</span>
         </div>
 
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase' }}>Verified Intent Engine</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Verified Intent Engine</span>
           <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#c084fc', marginTop: '10px' }}>Pattern + Entity SQL</div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>6 Standard civic intents</span>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>6 Standard civic intents</span>
         </div>
       </div>
 
       {/* Query Log Table */}
       <div className="glass-panel" style={{ padding: '24px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#fff' }}>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>
             Historical Database QA Execution Logs
           </h3>
           <button
@@ -90,7 +90,7 @@ export default function QaAnalyticsScreen() {
         </div>
 
         {logs.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '30px', color: '#64748b' }}>
+          <div style={{ textAlign: 'center', padding: '30px', color: 'var(--text-dim)' }}>
             No query logs stored yet. Execute questions in the QA Interface to populate audit logs.
           </div>
         ) : (
@@ -109,22 +109,22 @@ export default function QaAnalyticsScreen() {
               <tbody>
                 {logs.map((l, idx) => (
                   <tr key={idx}>
-                    <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#60a5fa', fontSize: '0.8rem' }}>
+                    <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--primary-light)', fontSize: '0.8rem' }}>
                       {l.query_id}
                     </td>
-                    <td style={{ fontWeight: 600, color: '#fff' }}>
+                    <td style={{ fontWeight: 600, color: 'var(--text-main)' }}>
                       {l.question}
                     </td>
                     <td>
                       <span className="badge badge-cyan">{l.detected_intent}</span>
                     </td>
-                    <td style={{ fontWeight: 700, color: '#34d399' }}>
+                    <td style={{ fontWeight: 700, color: 'var(--accent-green)' }}>
                       {l.matched_record_count}
                     </td>
-                    <td style={{ fontFamily: 'var(--font-mono)', color: '#fbbf24' }}>
+                    <td style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-amber)' }}>
                       {l.execution_time_ms} ms
                     </td>
-                    <td style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
+                    <td style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                       {l.timestamp ? new Date(l.timestamp).toLocaleTimeString() : 'Recent'}
                     </td>
                   </tr>
@@ -138,3 +138,4 @@ export default function QaAnalyticsScreen() {
     </div>
   );
 }
+

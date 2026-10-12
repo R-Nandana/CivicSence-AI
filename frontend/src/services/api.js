@@ -180,11 +180,11 @@ export const api = {
   },
 
   // Machine Translation
-  async translateText(text, sourceLanguage = null) {
+  async translateText(text, sourceLanguage = null, targetLanguage = 'English') {
     const res = await fetch(`${API_BASE}/nlp/translate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text, source_language: sourceLanguage })
+      body: JSON.stringify({ text, source_language: sourceLanguage, target_language: targetLanguage })
     });
     return await handleResponse(res);
   },
@@ -200,11 +200,11 @@ export const api = {
   },
 
   // LLM Universal Translation
-  async translateLLM(text, sourceLanguage = null) {
+  async translateLLM(text, sourceLanguage = null, targetLanguage = 'English') {
     const res = await fetch(`${API_BASE}/nlp/translate-llm`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text, source_language: sourceLanguage })
+      body: JSON.stringify({ text, source_language: sourceLanguage, target_language: targetLanguage })
     });
     return await handleResponse(res);
   },

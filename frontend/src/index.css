@@ -1,9 +1,10 @@
-:root {
+:root, [data-theme="dark"] {
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Premium Palette */
+  /* Premium Dark Palette */
   --bg-dark: #090d16;
+  --bg-surface: #0e1526;
   --bg-card: rgba(18, 24, 38, 0.85);
   --bg-card-hover: rgba(28, 36, 56, 0.95);
   --border-color: rgba(255, 255, 255, 0.08);
@@ -21,6 +22,61 @@
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --text-dim: #64748b;
+
+  --sidebar-bg: linear-gradient(180deg, #090d16 0%, #0d1527 100%);
+  --topbar-bg: rgba(10, 15, 29, 0.95);
+  --panel-bg: rgba(15, 23, 42, 0.65);
+  --card-bg: rgba(18, 24, 38, 0.85);
+  --input-bg: rgba(15, 23, 42, 0.7);
+  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  --header-border: rgba(255, 255, 255, 0.08);
+
+  /* Sidebar Active Item Tokens (Dark) */
+  --sidebar-active-bg: linear-gradient(90deg, rgba(37, 99, 235, 0.22) 0%, rgba(99, 102, 241, 0.12) 100%);
+  --sidebar-active-text: #38bdf8;
+  --sidebar-active-border: rgba(56, 189, 248, 0.35);
+  --sidebar-active-officer-bg: linear-gradient(90deg, rgba(13, 148, 136, 0.22) 0%, rgba(5, 150, 105, 0.12) 100%);
+  --sidebar-active-officer-text: #2dd4bf;
+  --sidebar-active-officer-border: rgba(45, 212, 191, 0.35);
+}
+
+[data-theme="light"] {
+  /* Crisp Modern Light Palette */
+  --bg-dark: #f0f4f8;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --border-color: rgba(0, 0, 0, 0.09);
+  --border-focus: rgba(79, 70, 229, 0.45);
+
+  --primary: #4f46e5;
+  --primary-glow: rgba(79, 70, 229, 0.15);
+  --primary-light: #4338ca;
+  --secondary: #0891b2;
+  --accent-green: #059669;
+  --accent-amber: #d97706;
+  --accent-rose: #e11d48;
+  --accent-purple: #9333ea;
+
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-dim: #64748b;
+
+  --sidebar-bg: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  --topbar-bg: rgba(255, 255, 255, 0.97);
+  --panel-bg: rgba(241, 245, 249, 0.98);
+  --card-bg: #ffffff;
+  --input-bg: #ffffff;
+  --card-shadow: 0 4px 24px -4px rgba(15, 23, 42, 0.10), 0 1px 4px rgba(0,0,0,0.05);
+  --header-border: rgba(0, 0, 0, 0.08);
+
+  /* Sidebar Active Item Tokens (Light) — deeper, higher-contrast */
+  --sidebar-active-bg: linear-gradient(90deg, rgba(37, 99, 235, 0.14) 0%, rgba(99, 102, 241, 0.08) 100%);
+  --sidebar-active-text: #2563eb;
+  --sidebar-active-border: rgba(37, 99, 235, 0.3);
+  --sidebar-active-officer-bg: linear-gradient(90deg, rgba(13, 148, 136, 0.14) 0%, rgba(5, 150, 105, 0.08) 100%);
+  --sidebar-active-officer-text: #0d9488;
+  --sidebar-active-officer-border: rgba(13, 148, 136, 0.3);
 }
 
 * {
@@ -34,34 +90,272 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-main);
   min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+[data-theme="dark"] body {
   background-image: 
     radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.12) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.10) 0px, transparent 50%),
     radial-gradient(at 50% 50%, rgba(168, 85, 247, 0.05) 0px, transparent 50%);
   background-attachment: fixed;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
 }
 
+[data-theme="light"] body {
+  background-color: #f0f4f8;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.06) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.05) 0px, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(16, 185, 129, 0.04) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LIGHT THEME — GLOBAL OVERRIDE LAYER
+   Overrides hardcoded inline color: '#fff' text on white/pale cards.
+   Hero banners and btn-primary retain forced white text via specificity.
+═══════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   LOGIN PAGE — DEDICATED CONTRAST ENFORCEMENT
+   Guarantees 100% visible text & cards in both Dark & Light modes
+═══════════════════════════════════════════════════════════════ */
+
+[data-theme="dark"] .login-page h1,
+[data-theme="dark"] .login-page h2,
+[data-theme="dark"] .login-page .login-heading {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .login-page .login-metric-card {
+  background: rgba(15, 23, 42, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+[data-theme="dark"] .login-page .login-metric-label {
+  color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .login-page h1,
+[data-theme="light"] .login-page h2,
+[data-theme="light"] .login-page .login-heading {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .login-page .login-metric-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
+}
+
+[data-theme="light"] .login-page .login-metric-label {
+  color: #475569 !important;
+}
+
+/* All headings in light mode must be dark slate (except hero-banner and login-page) */
+[data-theme="light"] h1:not(.hero-banner *):not(.login-page *),
+[data-theme="light"] h2:not(.hero-banner *):not(.login-page *),
+[data-theme="light"] h3:not(.hero-banner *):not(.login-page *),
+[data-theme="light"] h4:not(.hero-banner *):not(.login-page *),
+[data-theme="light"] h5:not(.hero-banner *):not(.login-page *),
+[data-theme="light"] h6:not(.hero-banner *):not(.login-page *) {
+  color: var(--text-main) !important;
+}
+
+/* Override inline color:#fff for paragraphs & spans inside cards */
+[data-theme="light"] .glass-panel:not(.login-page *),
+[data-theme="light"] .card:not(.login-page *) {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: var(--text-main) !important;
+  box-shadow: 0 4px 24px -4px rgba(15, 23, 42, 0.10), 0 1px 4px rgba(0,0,0,0.04) !important;
+}
+
+[data-theme="light"] .glass-panel:not(.login-page *) p,
+[data-theme="light"] .glass-panel:not(.login-page *) span:not(.badge):not([class*="badge-"]),
+[data-theme="light"] .card:not(.login-page *) p,
+[data-theme="light"] .card:not(.login-page *) span:not(.badge):not([class*="badge-"]) {
+  color: var(--text-main);
+}
+
+/* Inline-styled result/content block divs that have hardcoded dark backgrounds */
+[data-theme="light"] [style*="background: rgba(15"]:not(.login-page *),
+[data-theme="light"] [style*="background: rgba(10"]:not(.login-page *),
+[data-theme="light"] [style*="background: rgba(0,0,0"]:not(.login-page *),
+[data-theme="light"] [style*="rgba(15, 23, 42"]:not(.login-page *),
+[data-theme="light"] [style*="rgba(0, 0, 0, 0.3"]:not(.login-page *) {
+  background: rgba(241, 245, 249, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Inline color:#fff on headings and strong text inside cards */
+[data-theme="light"] .glass-panel:not(.login-page *) [style*="color: '#fff'"],
+[data-theme="light"] .glass-panel:not(.login-page *) [style*='color: "#fff"'],
+[data-theme="light"] .glass-panel:not(.login-page *) [style*="color: '#ffffff'"],
+[data-theme="light"] .glass-panel:not(.login-page *) [style*="color: '#f1f5f9'"],
+[data-theme="light"] .glass-panel:not(.login-page *) [style*="color: '#cbd5e1'"],
+[data-theme="light"] .glass-panel:not(.login-page *) [style*="color: '#94a3b8'"],
+[data-theme="light"] .card:not(.login-page *) [style*="color: '#fff'"],
+[data-theme="light"] .card:not(.login-page *) [style*='color: "#fff"'],
+[data-theme="light"] .card:not(.login-page *) [style*="color: '#f1f5f9'"] {
+  color: var(--text-main) !important;
+}
+
+/* Page-level headings that are NOT inside hero banners or login page */
+[data-theme="light"] div:not(.login-page *) > h1[style*="color: '#fff'"],
+[data-theme="light"] div:not(.login-page *) > h2[style*="color: '#fff'"],
+[data-theme="light"] div:not(.login-page *) > h3[style*="color: '#fff'"],
+[data-theme="light"] div:not(.login-page *) > h3[style*='color: "#fff"'],
+[data-theme="light"] div:not(.login-page *) > h1[style*='color: "#fff"'],
+[data-theme="light"] div:not(.login-page *) > h2[style*='color: "#fff"'] {
+  color: var(--text-main) !important;
+}
+
+/* HERO BANNER — must always stay white text on dark gradient */
+[data-theme="light"] .hero-banner,
+[data-theme="light"] .hero-banner h1,
+[data-theme="light"] .hero-banner h2,
+[data-theme="light"] .hero-banner h3,
+[data-theme="light"] .hero-banner p,
+[data-theme="light"] .hero-banner span:not(.badge) {
+  color: #ffffff !important;
+}
+
+/* Primary buttons always white text regardless of theme */
+[data-theme="light"] .btn-primary,
+[data-theme="light"] .btn-success {
+  color: #ffffff !important;
+}
+
+/* Tables in light mode */
+[data-theme="light"] .civic-table th {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+[data-theme="light"] .civic-table td {
+  color: #0f172a !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+[data-theme="light"] .civic-table tr:hover td {
+  background: #f8fafc !important;
+}
+
+/* Badge color adjustments for light mode readability */
+[data-theme="light"] .badge-blue { background: rgba(37, 99, 235, 0.12) !important; color: #1d4ed8 !important; border-color: rgba(37, 99, 235, 0.25) !important; }
+[data-theme="light"] .badge-purple { background: rgba(124, 58, 237, 0.12) !important; color: #6d28d9 !important; border-color: rgba(124, 58, 237, 0.25) !important; }
+[data-theme="light"] .badge-green { background: rgba(5, 150, 105, 0.12) !important; color: #047857 !important; border-color: rgba(5, 150, 105, 0.25) !important; }
+[data-theme="light"] .badge-amber { background: rgba(217, 119, 6, 0.12) !important; color: #b45309 !important; border-color: rgba(217, 119, 6, 0.25) !important; }
+[data-theme="light"] .badge-rose { background: rgba(225, 29, 72, 0.12) !important; color: #be185d !important; border-color: rgba(225, 29, 72, 0.25) !important; }
+[data-theme="light"] .badge-cyan { background: rgba(8, 145, 178, 0.12) !important; color: #0e7490 !important; border-color: rgba(8, 145, 178, 0.25) !important; }
+
+/* Input fields in light mode */
+[data-theme="light"] .input-field,
+[data-theme="light"] .textarea-field,
+[data-theme="light"] .select-field {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .input-field::placeholder,
+[data-theme="light"] .textarea-field::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Sidebar group badge chip in light mode */
+[data-theme="light"] aside [style*="rgba(255, 255, 255, 0.06)"] {
+  background: rgba(0, 0, 0, 0.06) !important;
+  color: var(--text-dim) !important;
+}
+
+/* Screen-level content areas — force background clean */
+[data-theme="light"] main > div,
+[data-theme="light"] .screen-content {
+  color: var(--text-main);
+}
+
+/* Force all inline div text inside main content to be dark in light mode */
+[data-theme="light"] main div[style*="color: 'var(--text-main)'"],
+[data-theme="light"] main span[style*="color: 'var(--text-main)'"] {
+  color: #0f172a !important;
+}
+
+/* Remaining inline dark rgba bg pattern (0.4 opacity) */
+[data-theme="light"] [style*="rgba(15, 23, 42, 0.4)"] {
+  background: rgba(241, 245, 249, 0.95) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+/* All inline td and strong text that was hardcoded white */
+[data-theme="light"] td[style*="color: 'var(--text-main)'"],
+[data-theme="light"] td,
+[data-theme="light"] td span {
+  color: var(--text-main) !important;
+}
+
+/* Select option text in light mode */
+[data-theme="light"] select,
+[data-theme="light"] select option {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* Inline color overrides via CSS variables in style props render correct */
+[data-theme="light"] [style*="color: var(--text-main)"] { color: #0f172a !important; }
+[data-theme="light"] [style*="color: var(--text-muted)"] { color: #475569 !important; }
+[data-theme="light"] [style*="color: var(--text-dim)"]   { color: #64748b !important; }
+[data-theme="light"] [style*="color: var(--primary-light)"] { color: #4338ca !important; }
+[data-theme="light"] [style*="color: var(--secondary)"]  { color: #0891b2 !important; }
+[data-theme="light"] [style*="color: var(--primary)"]    { color: #4f46e5 !important; }
+[data-theme="light"] [style*="color: var(--accent-green)"] { color: #059669 !important; }
+[data-theme="light"] [style*="color: var(--accent-amber)"] { color: #d97706 !important; }
+
+/* Panel-bg overrides for inline style */
+[data-theme="light"] [style*="background: var(--panel-bg)"] {
+  background: #f1f5f9 !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+[data-theme="light"] [style*="background: var(--input-bg)"] {
+  background: #ffffff !important;
+}
+
+/* Topbar in light mode */
+[data-theme="light"] header,
+[data-theme="light"] nav {
+  background: var(--topbar-bg) !important;
+  border-color: var(--header-border) !important;
+}
+
+/* Section dividers */
+[data-theme="light"] [style*="borderTop: '1px solid rgba(255, 255, 255"],
+[data-theme="light"] [style*="border-top: '1px solid rgba(255, 255, 255"] {
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+
 /* Glassmorphic Container Cards */
-.glass-panel {
+.glass-panel, .card {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-color);
   border-radius: 16px;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--card-shadow);
   transition: all 0.25s ease;
+  color: var(--text-main);
 }
 
-.glass-panel:hover {
-  border-color: rgba(255, 255, 255, 0.14);
+.glass-panel:hover, .card:hover {
+  border-color: var(--border-focus);
 }
 
 /* Typography & Badges */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   letter-spacing: -0.02em;
+  color: var(--text-main);
 }
 
 .badge {
@@ -111,14 +405,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--panel-bg);
   color: var(--text-main);
   border: 1px solid var(--border-color);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--bg-card-hover);
+  border-color: var(--border-focus);
 }
 
 .btn-success {
@@ -140,7 +434,7 @@ h1, h2, h3, h4, h5, h6 {
 .input-field, .textarea-field, .select-field {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--input-bg);
   border: 1px solid var(--border-color);
   border-radius: 10px;
   color: var(--text-main);
@@ -153,7 +447,6 @@ h1, h2, h3, h4, h5, h6 {
 .input-field:focus, .textarea-field:focus, .select-field:focus {
   border-color: var(--primary-light);
   box-shadow: 0 0 0 3px var(--primary-glow);
-  background: rgba(15, 23, 42, 0.85);
 }
 
 /* Custom Scrollbars */
@@ -162,14 +455,14 @@ h1, h2, h3, h4, h5, h6 {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(148, 163, 184, 0.25);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(148, 163, 184, 0.45);
 }
 
 /* Tables */
@@ -188,16 +481,16 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.05em;
   color: var(--text-muted);
   border-bottom: 1px solid var(--border-color);
-  background: rgba(15, 23, 42, 0.4);
+  background: var(--panel-bg);
 }
 
 .civic-table td {
   padding: 14px 16px;
   font-size: 0.9rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--border-color);
   color: var(--text-main);
 }
 
 .civic-table tr:hover td {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--panel-bg);
 }

@@ -36,15 +36,15 @@ export default function NerResultsScreen() {
   const getBadgeStyle = (type) => {
     switch (type) {
       case 'LOCATION':
-        return { bg: 'rgba(16, 185, 129, 0.18)', border: '#10b981', color: '#34d399', icon: MapPin };
+        return { bg: 'rgba(16, 185, 129, 0.18)', border: '#10b981', color: 'var(--accent-green)', icon: MapPin };
       case 'INFRASTRUCTURE':
-        return { bg: 'rgba(59, 130, 246, 0.18)', border: '#3b82f6', color: '#60a5fa', icon: Wrench };
+        return { bg: 'rgba(59, 130, 246, 0.18)', border: '#3b82f6', color: 'var(--primary-light)', icon: Wrench };
       case 'DURATION':
-        return { bg: 'rgba(245, 158, 11, 0.18)', border: '#f59e0b', color: '#fbbf24', icon: Clock };
+        return { bg: 'rgba(245, 158, 11, 0.18)', border: '#f59e0b', color: 'var(--accent-amber)', icon: Clock };
       case 'DEPARTMENT':
         return { bg: 'rgba(168, 85, 247, 0.18)', border: '#a855f7', color: '#c084fc', icon: Building2 };
       default:
-        return { bg: 'rgba(255, 255, 255, 0.1)', border: '#64748b', color: '#cbd5e1', icon: Search };
+        return { bg: 'rgba(255, 255, 255, 0.1)', border: '#64748b', color: 'var(--text-muted)', icon: Search };
     }
   };
 
@@ -55,18 +55,18 @@ export default function NerResultsScreen() {
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
           <span className="badge badge-purple">Concept 2</span>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
             Named Entity Recognition (Civic Domain NER)
           </h1>
         </div>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           Extracts physical civic entities from unstructured citizen complaints: Location, Infrastructure, Duration, and Department.
         </p>
       </div>
 
       {/* Input Form */}
       <div className="glass-panel" style={{ padding: '24px', marginBottom: '24px' }}>
-        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Sparkles size={18} color="#c084fc" /> Interactive Entity Extraction Tester
         </h3>
 
@@ -90,7 +90,7 @@ export default function NerResultsScreen() {
         </form>
 
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', alignSelf: 'center' }}>Test Scenarios:</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', alignSelf: 'center' }}>Test Scenarios:</span>
           {SAMPLES.map((s, idx) => (
             <button
               key={idx}
@@ -110,7 +110,7 @@ export default function NerResultsScreen() {
         
         {/* Extracted Entity Cards */}
         <div className="glass-panel" style={{ padding: '24px' }}>
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '16px' }}>
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '16px' }}>
             Isolated Entities & Visual Annotations
           </h3>
 
@@ -135,10 +135,10 @@ export default function NerResultsScreen() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <IconComp size={18} color={style.color} />
                     <div>
-                      <div style={{ fontSize: '0.98rem', fontWeight: 700, color: '#fff' }}>
+                      <div style={{ fontSize: '0.98rem', fontWeight: 700, color: 'var(--text-main)' }}>
                         {ent.entity_text}
                       </div>
-                      <div style={{ fontSize: '0.72rem', color: '#cbd5e1' }}>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                         Token Span: [{ent.start_char} - {ent.end_char}]
                       </div>
                     </div>
@@ -149,7 +149,7 @@ export default function NerResultsScreen() {
                     fontWeight: 800,
                     textTransform: 'uppercase',
                     color: style.color,
-                    background: 'rgba(0,0,0,0.3)',
+                    background: 'var(--panel-bg)',
                     padding: '4px 10px',
                     borderRadius: '9999px',
                     border: `1px solid ${style.border}`
@@ -164,33 +164,33 @@ export default function NerResultsScreen() {
 
         {/* NER Performance Evaluation Report */}
         <div className="glass-panel" style={{ padding: '24px' }}>
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '6px' }}>
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
             NER Benchmark Performance
           </h3>
-          <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '16px' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
             Evaluated on annotated civic ground truth test set
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', marginBottom: '20px' }}>
-            <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '14px', borderRadius: '10px' }}>
-              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Precision (Micro)</div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#34d399' }}>91.3%</div>
+            <div style={{ background: 'var(--panel-bg)', padding: '14px', borderRadius: '10px' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Precision (Micro)</div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--accent-green)' }}>91.3%</div>
             </div>
-            <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '14px', borderRadius: '10px' }}>
-              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Recall (Micro)</div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#60a5fa' }}>87.5%</div>
+            <div style={{ background: 'var(--panel-bg)', padding: '14px', borderRadius: '10px' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Recall (Micro)</div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary-light)' }}>87.5%</div>
             </div>
-            <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '14px', borderRadius: '10px' }}>
-              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>F1-Score</div>
+            <div style={{ background: 'var(--panel-bg)', padding: '14px', borderRadius: '10px' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>F1-Score</div>
               <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#c084fc' }}>89.4%</div>
             </div>
-            <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '14px', borderRadius: '10px' }}>
-              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Annotated TP/FP/FN</div>
-              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fbbf24' }}>21 / 2 / 3</div>
+            <div style={{ background: 'var(--panel-bg)', padding: '14px', borderRadius: '10px' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Annotated TP/FP/FN</div>
+              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--accent-amber)' }}>21 / 2 / 3</div>
             </div>
           </div>
 
-          <div style={{ fontSize: '0.8rem', color: '#94a3b8', lineHeight: 1.6, background: 'rgba(255, 255, 255, 0.03)', padding: '14px', borderRadius: '8px' }}>
+          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.6, background: 'var(--panel-bg)', padding: '14px', borderRadius: '8px' }}>
             <strong>Entity Types:</strong>
             <ul style={{ paddingLeft: '18px', marginTop: '6px' }}>
               <li><strong>LOCATION:</strong> Identifies streets, wards, junctions, bus stands.</li>
@@ -206,3 +206,4 @@ export default function NerResultsScreen() {
     </div>
   );
 }
+

@@ -62,11 +62,11 @@ export default function SpeechResultsScreen() {
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
           <span className="badge badge-rose">Concept 5</span>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
             Speech Processing & Word Error Rate (WER) Evaluation
           </h1>
         </div>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           Evaluates Automatic Speech Recognition (ASR) acoustic feature extraction and transcription fidelity on real-world civic voice queries.
         </p>
       </div>
@@ -79,36 +79,36 @@ export default function SpeechResultsScreen() {
         marginBottom: '28px'
       }}>
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase' }}>Mean WER Error Rate</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#38bdf8', marginTop: '4px' }}>8.86%</div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Levenshtein word distance metric</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Mean WER Error Rate</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--secondary)', marginTop: '4px' }}>8.86%</div>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Levenshtein word distance metric</span>
         </div>
 
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase' }}>Mean Speech Accuracy</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#34d399', marginTop: '4px' }}>91.1%</div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Fidelity across test benchmarks</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Mean Speech Accuracy</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-green)', marginTop: '4px' }}>91.1%</div>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Fidelity across test benchmarks</span>
         </div>
 
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase' }}>Acoustic Integrity</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Acoustic Integrity</span>
           <div style={{ fontSize: '2rem', fontWeight: 800, color: '#c084fc', marginTop: '4px' }}>100% Pass</div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>All samples digitized & voiced</span>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>All samples digitized & voiced</span>
         </div>
 
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase' }}>Evaluation Metric</span>
-          <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fbbf24', marginTop: '10px' }}>Levenshtein WER</div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>(S + D + I) / N_words</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Evaluation Metric</span>
+          <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--accent-amber)', marginTop: '10px' }}>Levenshtein WER</div>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>(S + D + I) / N_words</span>
         </div>
       </div>
 
       {/* Benchmark Benchmark Samples Table */}
       <div className="glass-panel" style={{ padding: '24px', marginBottom: '28px' }}>
-        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#fff', marginBottom: '6px' }}>
+        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
           Acoustic & Word Error Rate Benchmark Suite
         </h3>
-        <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '18px' }}>
+        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '18px' }}>
           Measured from `evaluation/evaluate_speech.py` against reference ground truth speech recordings
         </p>
 
@@ -128,22 +128,22 @@ export default function SpeechResultsScreen() {
             <tbody>
               {BENCHMARK_SAMPLES.map((s, idx) => (
                 <tr key={idx}>
-                  <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#60a5fa', fontSize: '0.8rem' }}>
+                  <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--primary-light)', fontSize: '0.8rem' }}>
                     {s.id}
                   </td>
                   <td>
                     <span className="badge badge-purple">{s.issue}</span>
                   </td>
-                  <td style={{ fontSize: '0.82rem', color: '#94a3b8' }}>
+                  <td style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
                     <div>{s.duration}</div>
-                    <div style={{ fontSize: '0.72rem', color: '#64748b' }}>RMS: {s.rms}</div>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>RMS: {s.rms}</div>
                   </td>
-                  <td style={{ color: '#cbd5e1' }}>"{s.ref}"</td>
-                  <td style={{ color: '#34d399', fontWeight: 600 }}>"{s.hyp}"</td>
-                  <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: Number(s.wer.replace('%','')) > 10 ? '#fbbf24' : '#34d399' }}>
+                  <td style={{ color: 'var(--text-muted)' }}>"{s.ref}"</td>
+                  <td style={{ color: 'var(--accent-green)', fontWeight: 600 }}>"{s.hyp}"</td>
+                  <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: Number(s.wer.replace('%','')) > 10 ? 'var(--accent-amber)' : 'var(--accent-green)' }}>
                     {s.wer}
                   </td>
-                  <td style={{ fontWeight: 800, color: '#fff' }}>
+                  <td style={{ fontWeight: 800, color: 'var(--text-main)' }}>
                     {s.accuracy}
                   </td>
                 </tr>
@@ -155,12 +155,12 @@ export default function SpeechResultsScreen() {
 
       {/* Formula & Architectural Explanation */}
       <div className="glass-panel" style={{ padding: '24px' }}>
-        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '10px' }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '10px' }}>
           Word Error Rate (WER) Methodology
         </h3>
-        <p style={{ fontSize: '0.85rem', color: '#cbd5e1', lineHeight: 1.6 }}>
+        <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
           Word Error Rate measures speech recognition error using dynamic programming minimum edit distance:
-          <code style={{ background: 'rgba(0,0,0,0.4)', padding: '2px 8px', borderRadius: '4px', margin: '0 6px', color: '#60a5fa' }}>
+          <code style={{ background: 'var(--panel-bg)', padding: '2px 8px', borderRadius: '4px', margin: '0 6px', color: 'var(--primary-light)' }}>
             WER = (Substitutions + Deletions + Insertions) / Total Reference Words
           </code>.
           Acoustic waveform extraction verifies Root Mean Square (RMS) energy to discard non-speech ambient silence and background noise before model transcription.
@@ -170,3 +170,4 @@ export default function SpeechResultsScreen() {
     </div>
   );
 }
+

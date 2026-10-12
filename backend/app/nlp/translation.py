@@ -138,19 +138,28 @@ class MachineTranslator:
             }
 
         # 1. Try Neural Online Machine Translation (with fast timeout fallback)
-        if HAS_DEEP_TRANSLATOR and is_tamil:
+        if HAS_DEEP_TRANSLATOR:
             try:
                 import socket
                 orig_timeout = socket.getdefaulttimeout()
-                socket.setdefaulttimeout(3.0)
+                socket.setdefaulttimeout(4.0)
                 try:
-                    translator = GoogleTranslator(source="ta", target="en")
+                    src_code = "ta" if is_tamil else "auto"
+                    if source_lang and source_lang.lower() not in ("auto", "tanglish"):
+                        lang_map = {
+                            "tamil": "ta", "hindi": "hi", "telugu": "te", "kannada": "kn",
+                            "malayalam": "ml", "bengali": "bn", "marathi": "mr", "gujarati": "gu",
+                            "punjabi": "pa", "urdu": "ur", "spanish": "es", "french": "fr",
+                            "german": "de", "arabic": "ar", "chinese": "zh-CN", "japanese": "ja"
+                        }
+                        src_code = lang_map.get(source_lang.lower(), "auto")
+                    translator = GoogleTranslator(source=src_code, target="en")
                     translated = translator.translate(cleaned_text)
                     if translated and translated.strip():
                         return {
                             "original_text": cleaned_text,
                             "translated_text": translated.strip(),
-                            "source_language": "Tamil",
+                            "source_language": detected,
                             "target_language": "English",
                             "engine": "Neural Machine Translation (Google MT)",
                             "confidence": 0.96,

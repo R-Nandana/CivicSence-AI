@@ -27,11 +27,11 @@ export default function LiveNlpVisualizer({ nlpData, title = "Integrated AI Inte
   const confidencePct = Math.round((nlpData.confidence || 0) * 100);
 
   return (
-    <div className="glass-panel" style={{ padding: '20px', border: '1px solid rgba(99, 102, 241, 0.25)', background: 'rgba(15, 23, 42, 0.75)' }}>
+    <div className="glass-panel" style={{ padding: '20px', border: '1px solid rgba(99, 102, 241, 0.25)' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', borderBottom: '1px solid var(--border-color)', paddingBottom: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Cpu size={18} color="var(--primary-light)" />
-          <h3 style={{ fontSize: '1rem', color: '#fff' }}>{title}</h3>
+          <h3 style={{ fontSize: '1rem', color: 'var(--text-main)' }}>{title}</h3>
         </div>
         <span className="badge badge-purple" style={{ fontSize: '0.7rem' }}>
           Pipeline v{nlpData.model_version || '1.0'}
@@ -40,7 +40,7 @@ export default function LiveNlpVisualizer({ nlpData, title = "Integrated AI Inte
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', marginBottom: '16px' }}>
         {/* Concept 3: Language Detection */}
-        <div style={{ background: 'rgba(255,255,255,0.03)', padding: '12px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+        <div style={{ background: 'var(--panel-bg)', padding: '12px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
           <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Globe size={13} /> Detected Language
           </p>
@@ -50,7 +50,7 @@ export default function LiveNlpVisualizer({ nlpData, title = "Integrated AI Inte
         </div>
 
         {/* Concept 1: Predicted Category */}
-        <div style={{ background: 'rgba(255,255,255,0.03)', padding: '12px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+        <div style={{ background: 'var(--panel-bg)', padding: '12px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
           <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
             <Tag size={13} /> Predicted Category
           </p>
@@ -60,13 +60,13 @@ export default function LiveNlpVisualizer({ nlpData, title = "Integrated AI Inte
         </div>
 
         {/* Classifier Confidence */}
-        <div style={{ background: 'rgba(255,255,255,0.03)', padding: '12px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
+        <div style={{ background: 'var(--panel-bg)', padding: '12px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
           <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Model Confidence</p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ flex: 1, height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
+            <div style={{ flex: 1, height: '6px', background: 'var(--border-color)', borderRadius: '3px', overflow: 'hidden' }}>
               <div style={{ width: `${confidencePct}%`, height: '100%', background: 'linear-gradient(90deg, #6366f1, #10b981)' }} />
             </div>
-            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>{confidencePct}%</span>
+            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-green)' }}>{confidencePct}%</span>
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@ export default function LiveNlpVisualizer({ nlpData, title = "Integrated AI Inte
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px',
-                  background: 'rgba(255,255,255,0.04)',
+                  background: 'var(--panel-bg)',
                   border: '1px solid var(--border-color)',
                   padding: '6px 10px',
                   borderRadius: '8px'
@@ -96,7 +96,7 @@ export default function LiveNlpVisualizer({ nlpData, title = "Integrated AI Inte
                 <span className={`badge ${getEntityBadgeClass(ent.entity_type)}`} style={{ fontSize: '0.65rem' }}>
                   {ent.entity_type}
                 </span>
-                <span style={{ fontSize: '0.85rem', color: '#fff', fontWeight: 500 }}>
+                <span style={{ fontSize: '0.85rem', color: 'var(--text-main)', fontWeight: 500 }}>
                   {ent.entity_text}
                 </span>
               </div>
@@ -120,7 +120,7 @@ export default function LiveNlpVisualizer({ nlpData, title = "Integrated AI Inte
               {nlpData.translation_info?.engine || 'Machine Translation'}
             </span>
           </div>
-          <p style={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 500, margin: 0 }}>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-main)', fontWeight: 500, margin: 0 }}>
             "{nlpData.translated_text}"
           </p>
         </div>
@@ -132,7 +132,7 @@ export default function LiveNlpVisualizer({ nlpData, title = "Integrated AI Inte
           <p style={{ fontSize: '0.72rem', color: 'var(--text-dim)', marginBottom: '4px' }}>
             Multilingual Canonical Processing Mapping:
           </p>
-          <code style={{ fontSize: '0.78rem', color: '#93c5fd', background: 'rgba(0,0,0,0.3)', padding: '4px 8px', borderRadius: '4px', display: 'block' }}>
+          <code style={{ fontSize: '0.78rem', color: 'var(--secondary)', background: 'var(--panel-bg)', padding: '4px 8px', borderRadius: '4px', display: 'block' }}>
             {nlpData.normalized_processing_text}
           </code>
         </div>
@@ -140,4 +140,5 @@ export default function LiveNlpVisualizer({ nlpData, title = "Integrated AI Inte
     </div>
   );
 }
+
 

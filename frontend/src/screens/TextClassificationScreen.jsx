@@ -74,11 +74,11 @@ export default function TextClassificationScreen() {
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
           <span className="badge badge-blue">Concept 1</span>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
             Text Classification & Softmax Probability Engine
           </h1>
         </div>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           TF-IDF Feature Extraction (unigrams + bigrams, sublinear TF scaling, smooth IDF) + Multiclass Softmax Logistic Regression
           evaluating across all 8 civic municipal categories.
         </p>
@@ -86,7 +86,7 @@ export default function TextClassificationScreen() {
 
       {/* Live Classifier Tester */}
       <div className="glass-panel" style={{ padding: '24px', marginBottom: '28px' }}>
-        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Sparkles size={18} color="#60a5fa" /> Live Inference Playground
         </h3>
 
@@ -114,32 +114,32 @@ export default function TextClassificationScreen() {
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
           gap: '14px',
-          background: 'rgba(15, 23, 42, 0.6)',
+          background: 'var(--panel-bg)',
           padding: '18px 22px',
           borderRadius: '12px',
-          border: '1px solid rgba(255, 255, 255, 0.08)'
+          border: '1px solid var(--border-color)'
         }}>
           <div>
-            <span style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Predicted Category</span>
-            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#60a5fa', marginTop: '2px' }}>
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Predicted Category</span>
+            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--primary-light)', marginTop: '2px' }}>
               {prediction.predicted_category}
             </div>
           </div>
           <div>
-            <span style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Model Confidence</span>
-            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#34d399', marginTop: '2px' }}>
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Model Confidence</span>
+            <div style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--accent-green)', marginTop: '2px' }}>
               {(prediction.confidence * 100).toFixed(1)}%
             </div>
           </div>
           <div>
-            <span style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Active Model Version</span>
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Active Model Version</span>
             <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#c084fc', marginTop: '2px', fontFamily: 'var(--font-mono)' }}>
               {prediction.model_version || 'v1.0.0'}
             </div>
           </div>
           <div>
-            <span style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Vocabulary Representation</span>
-            <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#fbbf24', marginTop: '4px' }}>
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Vocabulary Representation</span>
+            <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--accent-amber)', marginTop: '4px' }}>
               3,500 N-Grams
             </div>
           </div>
@@ -151,10 +151,10 @@ export default function TextClassificationScreen() {
         
         {/* Recharts Softmax Probabilities Bar Chart */}
         <div className="glass-panel" style={{ padding: '24px' }}>
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '6px' }}>
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
             Softmax Class Probabilities Distribution
           </h3>
-          <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '18px' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '18px' }}>
             Normalizes class logits across all 8 civic categories via softmax function
           </p>
 
@@ -165,7 +165,7 @@ export default function TextClassificationScreen() {
                 <YAxis type="category" dataKey="category" stroke="#cbd5e1" fontSize={11} width={100} />
                 <Tooltip
                   formatter={(val) => [`${val}%`, 'Probability']}
-                  contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }}
+                  contentStyle={{ background: 'var(--input-bg)', border: '1px solid #334155', borderRadius: '8px' }}
                 />
                 <Bar dataKey="probability" radius={[0, 6, 6, 0]}>
                   {chartData.map((entry, index) => (
@@ -179,35 +179,35 @@ export default function TextClassificationScreen() {
 
         {/* Model Evaluation Metrics Report */}
         <div className="glass-panel" style={{ padding: '24px' }}>
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '6px' }}>
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
             Model Evaluation Metrics (Stratified Test Split)
           </h3>
-          <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '16px' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
             Measured on 209 unseen hold-out complaints (80/20 train-test ratio)
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', marginBottom: '20px' }}>
-            <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '14px', borderRadius: '10px' }}>
-              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Overall Accuracy</div>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#34d399' }}>100.0%</div>
+            <div style={{ background: 'var(--panel-bg)', padding: '14px', borderRadius: '10px' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Overall Accuracy</div>
+              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--accent-green)' }}>100.0%</div>
             </div>
-            <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '14px', borderRadius: '10px' }}>
-              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Macro F1-Score</div>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#60a5fa' }}>1.000</div>
+            <div style={{ background: 'var(--panel-bg)', padding: '14px', borderRadius: '10px' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Macro F1-Score</div>
+              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--primary-light)' }}>1.000</div>
             </div>
-            <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '14px', borderRadius: '10px' }}>
-              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Precision Average</div>
+            <div style={{ background: 'var(--panel-bg)', padding: '14px', borderRadius: '10px' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Precision Average</div>
               <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#c084fc' }}>1.000</div>
             </div>
-            <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '14px', borderRadius: '10px' }}>
-              <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Recall Average</div>
-              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fbbf24' }}>1.000</div>
+            <div style={{ background: 'var(--panel-bg)', padding: '14px', borderRadius: '10px' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Recall Average</div>
+              <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--accent-amber)' }}>1.000</div>
             </div>
           </div>
 
-          <div style={{ fontSize: '0.8rem', color: '#94a3b8', lineHeight: 1.6, background: 'rgba(255, 255, 255, 0.03)', padding: '14px', borderRadius: '8px' }}>
+          <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.6, background: 'var(--panel-bg)', padding: '14px', borderRadius: '8px' }}>
             <strong>Academic Provenance:</strong> Trained on NYC 311 Open Data Service Requests across 8 normalized categories.
-            Uses L2 penalty regularization (λ=0.0001) and mini-batch stochastic gradient descent.
+            Uses L2 penalty regularization (Î»=0.0001) and mini-batch stochastic gradient descent.
           </div>
         </div>
 
@@ -215,10 +215,10 @@ export default function TextClassificationScreen() {
 
       {/* Confusion Matrix Table */}
       <div className="glass-panel" style={{ padding: '24px' }}>
-        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '6px' }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
           Multiclass Confusion Matrix (Holdout Test Set)
         </h3>
-        <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '16px' }}>
+        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
           Rows: Ground Truth Class | Columns: Predicted Class (209 test samples)
         </p>
 
@@ -240,7 +240,7 @@ export default function TextClassificationScreen() {
             <tbody>
               {CONFUSION_MATRIX.map((row, idx) => (
                 <tr key={idx}>
-                  <td style={{ textAlign: 'left', fontWeight: 700, color: '#f8fafc' }}>{row.actual}</td>
+                  <td style={{ textAlign: 'left', fontWeight: 700, color: 'var(--text-main)' }}>{row.actual}</td>
                   <td style={{ color: row.Drai > 0 ? '#34d399' : '#64748b', fontWeight: row.Drai > 0 ? 800 : 400 }}>{row.Drai}</td>
                   <td style={{ color: row.Publ > 0 ? '#34d399' : '#64748b', fontWeight: row.Publ > 0 ? 800 : 400 }}>{row.Publ}</td>
                   <td style={{ color: row.Road > 0 ? '#34d399' : '#64748b', fontWeight: row.Road > 0 ? 800 : 400 }}>{row.Road}</td>
@@ -259,3 +259,4 @@ export default function TextClassificationScreen() {
     </div>
   );
 }
+

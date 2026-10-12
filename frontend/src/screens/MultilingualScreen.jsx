@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Globe, Languages, Sparkles, Send, CheckCircle2, ArrowRight } from 'lucide-react';
 import { api } from '../services/api';
 
@@ -54,11 +54,11 @@ export default function MultilingualScreen({ onNavigate }) {
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
           <span className="badge badge-cyan">Concept 3</span>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
             Multilingual NLP & Tanglish Dialect Normalization
           </h1>
         </div>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           Ingests native Tamil script, Romanized Tanglish, and standard English. Detects language with Unicode heuristic checks,
           preserves the raw narrative in database records, and generates a normalized semantic representation for model inference.
         </p>
@@ -66,7 +66,7 @@ export default function MultilingualScreen({ onNavigate }) {
 
       {/* Input Box */}
       <div className="glass-panel" style={{ padding: '24px', marginBottom: '24px' }}>
-        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Globe size={18} color="#22d3ee" /> Multilingual Input Tester
         </h3>
 
@@ -90,7 +90,7 @@ export default function MultilingualScreen({ onNavigate }) {
         </form>
 
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', alignSelf: 'center' }}>Test Scenarios:</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', alignSelf: 'center' }}>Test Scenarios:</span>
           {SAMPLES.map((s, idx) => (
             <button
               key={idx}
@@ -111,51 +111,51 @@ export default function MultilingualScreen({ onNavigate }) {
           
           {/* Card 1: Original Raw Complaint */}
           <div className="glass-panel" style={{ padding: '20px' }}>
-            <span style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>
               1. Original Raw Input
             </span>
             <div style={{ marginTop: '8px', marginBottom: '12px' }}>
               <span className="badge badge-purple">{result.language || 'Detected'}</span>
             </div>
-            <p style={{ fontSize: '0.95rem', color: '#fff', lineHeight: 1.5, background: 'rgba(0,0,0,0.3)', padding: '12px', borderRadius: '8px' }}>
+            <p style={{ fontSize: '0.95rem', color: 'var(--text-main)', lineHeight: 1.5, background: 'var(--panel-bg)', padding: '12px', borderRadius: '8px' }}>
               "{result.original_text}"
             </p>
-            <span style={{ fontSize: '0.7rem', color: '#64748b', marginTop: '8px', display: 'block' }}>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: '8px', display: 'block' }}>
               Preserved unaltered in database schema
             </span>
           </div>
 
           {/* Card 2: Normalized Lexical Form */}
           <div className="glass-panel" style={{ padding: '20px' }}>
-            <span style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>
               2. Normalized Dialect
             </span>
             <div style={{ marginTop: '8px', marginBottom: '12px' }}>
               <span className="badge badge-amber">Morphological Map</span>
             </div>
-            <p style={{ fontSize: '0.95rem', color: '#cbd5e1', lineHeight: 1.5, background: 'rgba(0,0,0,0.3)', padding: '12px', borderRadius: '8px' }}>
+            <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.5, background: 'var(--panel-bg)', padding: '12px', borderRadius: '8px' }}>
               "{result.normalized_processing_text || result.original_text}"
             </p>
-            <span style={{ fontSize: '0.7rem', color: '#64748b', marginTop: '8px', display: 'block' }}>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: '8px', display: 'block' }}>
               Dialect markers mapped to canonical civic tokens
             </span>
           </div>
 
           {/* Card 3: Downstream Prediction */}
           <div className="glass-panel" style={{ padding: '20px' }}>
-            <span style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>
               3. AI Classification Transfer
             </span>
             <div style={{ marginTop: '8px', marginBottom: '12px' }}>
               <span className="badge badge-green">Downstream Inference</span>
             </div>
-            <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#60a5fa' }}>
+            <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--primary-light)' }}>
               {result.predicted_category}
             </div>
-            <div style={{ fontSize: '0.82rem', color: '#34d399', fontWeight: 600, marginTop: '4px' }}>
+            <div style={{ fontSize: '0.82rem', color: 'var(--accent-green)', fontWeight: 600, marginTop: '4px' }}>
               Confidence: {((result.confidence || 0.8) * 100).toFixed(1)}%
             </div>
-            <span style={{ fontSize: '0.7rem', color: '#64748b', marginTop: '12px', display: 'block' }}>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: '12px', display: 'block' }}>
               Accurately classified regardless of input dialect
             </span>
           </div>
@@ -166,3 +166,4 @@ export default function MultilingualScreen({ onNavigate }) {
     </div>
   );
 }
+

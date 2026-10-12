@@ -1,23 +1,27 @@
-import React from 'react';
-import { ShieldCheck, UserCheck, LogOut, Sparkles, Activity, Layers } from 'lucide-react';
+﻿import React from 'react';
+import { ShieldCheck, UserCheck, LogOut, Sparkles, Activity, Layers, Sun, Moon } from 'lucide-react';
 
-export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiveTab, onToggleViewMode }) {
+export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiveTab, onToggleViewMode, theme = 'dark', onToggleTheme }) {
+  const isOfficer = user?.role === 'officer';
+
   return (
     <header style={{
       borderBottom: '1px solid var(--border-color)',
-      background: 'rgba(9, 13, 22, 0.85)',
+      background: 'var(--topbar-bg)',
       backdropFilter: 'blur(12px)',
       position: 'sticky',
       top: 0,
-      zIndex: 50
+      zIndex: 50,
+      transition: 'background 0.25s ease'
     }}>
       <div style={{
-        maxWidth: '1300px',
+        maxWidth: '1350px',
         margin: '0 auto',
-        padding: '14px 24px',
+        padding: '12px 24px',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        gap: '16px'
       }}>
         {/* Brand Logo */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -38,28 +42,30 @@ export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiv
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em', color: '#fff' }}>CivicSense</span>
-              <span className="badge badge-purple" style={{ fontSize: '0.65rem' }}>Phase I NLP</span>
+              <span style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>CivicSense</span>
+              <span className={`badge ${isOfficer ? 'badge-green' : 'badge-blue'}`} style={{ fontSize: '0.65rem' }}>
+                {isOfficer ? 'Officer Workspace' : 'Citizen Portal'}
+              </span>
             </div>
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Complaint Intelligence & Resolution System</p>
+            <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Smart City Grievance Intelligence</p>
           </div>
         </div>
 
-        {/* Role-Based Portal Navigation Tabs */}
+        {/* Role-Based Navigation Tabs */}
         {user?.role === 'citizen' && (
-          <div style={{ display: 'flex', gap: '6px', background: 'rgba(255,255,255,0.04)', padding: '4px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+          <div style={{ display: 'flex', gap: '6px', background: 'var(--panel-bg)', padding: '4px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
             <button
               className="btn"
               style={{
                 padding: '6px 14px',
                 fontSize: '0.82rem',
                 borderRadius: '8px',
-                background: (!activeTab || activeTab === 'complaints') ? '#4f46e5' : 'transparent',
+                background: (!activeTab || activeTab === 'complaints') ? 'var(--primary)' : 'transparent',
                 color: (!activeTab || activeTab === 'complaints') ? '#fff' : 'var(--text-muted)'
               }}
               onClick={() => setActiveTab('complaints')}
             >
-              <UserCheck size={15} /> Citizen Complaint Portal
+              <UserCheck size={15} /> My Grievances
             </button>
 
             <button
@@ -69,11 +75,11 @@ export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiv
                 fontSize: '0.82rem',
                 borderRadius: '8px',
                 background: activeTab === 'multilingual' ? 'rgba(14, 165, 233, 0.2)' : 'transparent',
-                color: activeTab === 'multilingual' ? '#38bdf8' : 'var(--text-muted)'
+                color: activeTab === 'multilingual' ? '#0ea5e9' : 'var(--text-muted)'
               }}
               onClick={() => setActiveTab('multilingual')}
             >
-              Universal MT
+              Multilingual Hub
             </button>
 
             <button
@@ -83,29 +89,29 @@ export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiv
                 fontSize: '0.82rem',
                 borderRadius: '8px',
                 background: activeTab === 'qachat' ? 'rgba(79, 70, 229, 0.2)' : 'transparent',
-                color: activeTab === 'qachat' ? '#818cf8' : 'var(--text-muted)'
+                color: activeTab === 'qachat' ? '#6366f1' : 'var(--text-muted)'
               }}
               onClick={() => setActiveTab('qachat')}
             >
-              QA & Chatbot
+              AI Helpdesk
             </button>
           </div>
         )}
 
         {user?.role === 'officer' && (
-          <div style={{ display: 'flex', gap: '6px', background: 'rgba(255,255,255,0.04)', padding: '4px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+          <div style={{ display: 'flex', gap: '6px', background: 'var(--panel-bg)', padding: '4px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
             <button
               className="btn"
               style={{
                 padding: '6px 14px',
                 fontSize: '0.82rem',
                 borderRadius: '8px',
-                background: activeTab === 'officer' ? '#059669' : 'transparent',
-                color: activeTab === 'officer' ? '#fff' : 'var(--text-muted)'
+                background: (!activeTab || activeTab === 'officer') ? '#0d9488' : 'transparent',
+                color: (!activeTab || activeTab === 'officer') ? '#fff' : 'var(--text-muted)'
               }}
               onClick={() => setActiveTab('officer')}
             >
-              <ShieldCheck size={15} /> Officer Control Center
+              <ShieldCheck size={15} /> Officer Operations
             </button>
 
             <button
@@ -114,12 +120,12 @@ export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiv
                 padding: '6px 14px',
                 fontSize: '0.82rem',
                 borderRadius: '8px',
-                background: activeTab === 'eda' ? 'rgba(168, 85, 247, 0.2)' : 'transparent',
-                color: activeTab === 'eda' ? '#c084fc' : 'var(--text-muted)'
+                background: activeTab === 'eda' ? 'rgba(59, 130, 246, 0.2)' : 'transparent',
+                color: activeTab === 'eda' ? '#3b82f6' : 'var(--text-muted)'
               }}
               onClick={() => setActiveTab('eda')}
             >
-              <Activity size={15} /> EDA & Model Metrics
+              City Analytics
             </button>
 
             <button
@@ -129,87 +135,76 @@ export default function Navbar({ user, onLogout, onOpenAuth, activeTab, setActiv
                 fontSize: '0.82rem',
                 borderRadius: '8px',
                 background: activeTab === 'marketbasket' ? 'rgba(245, 158, 11, 0.2)' : 'transparent',
-                color: activeTab === 'marketbasket' ? '#fbbf24' : 'var(--text-muted)'
+                color: activeTab === 'marketbasket' ? '#f59e0b' : 'var(--text-muted)'
               }}
               onClick={() => setActiveTab('marketbasket')}
             >
-              Market Basket
+              Association Mining
             </button>
           </div>
         )}
 
+        {/* User Session & Controls */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          
+          {/* Light / Dark Mode Toggle */}
+          {onToggleTheme && (
+            <button
+              onClick={onToggleTheme}
+              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '10px',
+                background: 'var(--panel-bg)',
+                border: '1px solid var(--border-color)',
+                color: theme === 'dark' ? '#fbbf24' : '#4f46e5',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+            </button>
+          )}
 
-        {/* User Session / Auth Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          {/* Toggle between 1st UI and 21-Screen Suite */}
+          {/* Switch to Dedicated Suite */}
           {onToggleViewMode && (
             <button
               className="btn"
               style={{
-                padding: '6px 14px',
+                padding: '6px 12px',
                 fontSize: '0.78rem',
                 fontWeight: 700,
                 borderRadius: '8px',
                 background: 'rgba(56, 189, 248, 0.12)',
-                border: '1px solid rgba(56, 189, 248, 0.35)',
-                color: '#38bdf8',
+                border: '1px solid var(--border-color)',
+                color: '#0284c7',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px',
                 cursor: 'pointer'
               }}
               onClick={onToggleViewMode}
-              title="Switch to 21-Screen Dedicated Intelligence Suite"
+              title="Switch to Intelligence Workspace"
             >
-              <Sparkles size={14} color="#38bdf8" />
-              <span>21-Screen Suite</span>
+              <Sparkles size={14} />
+              <span>Full Workspace</span>
             </button>
           )}
 
-          {user ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              {user.role === 'citizen' && (
-                <button
-                  className="btn"
-                  style={{
-                    padding: '6px 14px',
-                    fontSize: '0.78rem',
-                    fontWeight: 700,
-                    background: 'rgba(13, 148, 136, 0.15)',
-                    border: '1px solid rgba(13, 148, 136, 0.4)',
-                    color: '#2dd4bf',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    borderRadius: '8px',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => onOpenAuth('officer')}
-                  title="Sign In as Municipal Officer"
-                >
-                  <ShieldCheck size={14} color="#2dd4bf" />
-                  <span>Municipal Officer Login</span>
-                </button>
-              )}
-
+          {user && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <div style={{ textAlign: 'right' }}>
-                <p style={{ fontSize: '0.85rem', fontWeight: 600, color: '#fff' }}>{user.name}</p>
-                <span className={`badge ${user.role === 'officer' ? 'badge-green' : 'badge-blue'}`} style={{ fontSize: '0.65rem' }}>
+                <p style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)', margin: 0 }}>{user.name}</p>
+                <span className={`badge ${isOfficer ? 'badge-green' : 'badge-blue'}`} style={{ fontSize: '0.62rem', padding: '1px 6px' }}>
                   {user.role}
                 </span>
               </div>
-              <button className="btn btn-secondary" style={{ padding: '8px 12px' }} onClick={onLogout} title="Logout">
-                <LogOut size={16} />
-              </button>
-            </div>
-          ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <button
-                className="btn btn-secondary"
-                style={{ padding: '7px 16px', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
-                onClick={() => onOpenAuth('citizen')}
-              >
-                <UserCheck size={14} color="#60a5fa" /> Citizen Sign In
+              <button className="btn btn-secondary" style={{ padding: '8px 10px' }} onClick={onLogout} title="Logout">
+                <LogOut size={15} color="#ef4444" />
               </button>
             </div>
           )}

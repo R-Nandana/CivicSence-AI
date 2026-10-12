@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Activity, Database, Layers, CheckCircle2, RefreshCw, BarChart2, ShieldCheck } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell 
@@ -48,11 +48,11 @@ export default function EdaDashboardScreen() {
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
             <span className="badge badge-purple">ETL & Open Data</span>
-            <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+            <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
               Exploratory Data Analysis (EDA) & NYC 311 Ingestion
             </h1>
           </div>
-          <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
             Statistical audit of real-world civic complaint dataset (NYC 311 Open Data), class imbalance, vocabulary lengths, and data cleansing metrics.
           </p>
         </div>
@@ -74,31 +74,31 @@ export default function EdaDashboardScreen() {
         marginBottom: '28px'
       }}>
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 600 }}>Total Ingested Records</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', marginTop: '4px' }}>{shape.total_records || 1044}</div>
-          <span style={{ fontSize: '0.72rem', color: '#60a5fa' }}>{shape.total_columns || 12} Processed Features</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Total Ingested Records</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '4px' }}>{shape.total_records || 1044}</div>
+          <span style={{ fontSize: '0.72rem', color: 'var(--primary-light)' }}>{shape.total_columns || 12} Processed Features</span>
         </div>
 
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 600 }}>Mean Complaint Word Count</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#34d399', marginTop: '4px' }}>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Mean Complaint Word Count</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-green)', marginTop: '4px' }}>
             {eda?.text_statistics?.mean_word_count || 14.8}
           </div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Descriptive token depth</span>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Descriptive token depth</span>
         </div>
 
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 600 }}>Missing Value Audit</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#38bdf8', marginTop: '4px' }}>0 Nulls</div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Clean schema integrity</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Missing Value Audit</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--secondary)', marginTop: '4px' }}>0 Nulls</div>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Clean schema integrity</span>
         </div>
 
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 600 }}>Unique Vocabulary</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 600 }}>Unique Vocabulary</span>
           <div style={{ fontSize: '2rem', fontWeight: 800, color: '#c084fc', marginTop: '4px' }}>
             {eda?.text_statistics?.unique_vocabulary_size || 3500}
           </div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Extracted N-Grams</span>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Extracted N-Grams</span>
         </div>
       </div>
 
@@ -107,10 +107,10 @@ export default function EdaDashboardScreen() {
         
         {/* Category Imbalance Bar Chart */}
         <div className="glass-panel" style={{ padding: '24px' }}>
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '6px' }}>
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
             Category Distribution & Class Imbalance Analysis
           </h3>
-          <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '16px' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
             Shows real-world distribution across municipal service types
           </p>
 
@@ -120,7 +120,7 @@ export default function EdaDashboardScreen() {
                 <XAxis dataKey="name" stroke="#94a3b8" fontSize={10} angle={-25} textAnchor="end" interval={0} />
                 <YAxis stroke="#94a3b8" fontSize={11} />
                 <Tooltip
-                  contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }}
+                  contentStyle={{ background: 'var(--input-bg)', border: '1px solid #334155', borderRadius: '8px' }}
                 />
                 <Bar dataKey="count" radius={[6, 6, 0, 0]}>
                   {categoryChartData.map((entry, index) => (
@@ -134,10 +134,10 @@ export default function EdaDashboardScreen() {
 
         {/* Word Length Histogram */}
         <div className="glass-panel" style={{ padding: '24px' }}>
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '6px' }}>
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
             Complaint Word Length Histogram
           </h3>
-          <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '16px' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
             Distribution of narrative description token length
           </p>
 
@@ -147,7 +147,7 @@ export default function EdaDashboardScreen() {
                 <XAxis dataKey="range" stroke="#94a3b8" fontSize={11} />
                 <YAxis stroke="#94a3b8" fontSize={11} />
                 <Tooltip
-                  contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }}
+                  contentStyle={{ background: 'var(--input-bg)', border: '1px solid #334155', borderRadius: '8px' }}
                 />
                 <Bar dataKey="count" fill="#8b5cf6" radius={[6, 6, 0, 0]} />
               </BarChart>
@@ -159,10 +159,10 @@ export default function EdaDashboardScreen() {
 
       {/* Dataset Provenance & Cleansing Pipeline Summary */}
       <div className="glass-panel" style={{ padding: '24px' }}>
-        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '10px' }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '10px' }}>
           ETL Extraction & Cleansing Pipeline Provenance
         </h3>
-        <p style={{ fontSize: '0.85rem', color: '#cbd5e1', lineHeight: 1.6 }}>
+        <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
           Data collected from <strong>NYC 311 Service Requests</strong> via Socrata Open Data API.
           The ETL pipeline (<code>etl/extract.py</code>, <code>etl/transform.py</code>, <code>etl/load.py</code>) cleans punctuation,
           normalizes borough names (Manhattan, Brooklyn, Queens, Bronx, Staten Island), removes true duplicates while preserving
@@ -173,3 +173,4 @@ export default function EdaDashboardScreen() {
     </div>
   );
 }
+

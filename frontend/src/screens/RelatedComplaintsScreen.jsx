@@ -60,11 +60,11 @@ export default function RelatedComplaintsScreen({ onNavigate, onSelectComplaint 
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
           <span className="badge badge-purple">Core Differentiator</span>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
             Related Complaints & Issue Evolution Matching
           </h1>
         </div>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           Distinguishes between duplicates, independent co-reports, persistent follow-ups, and localized infrastructure hotspots
           using TF-IDF cosine similarity, entity overlap, and temporal proximity.
         </p>
@@ -72,7 +72,7 @@ export default function RelatedComplaintsScreen({ onNavigate, onSelectComplaint 
 
       {/* Interactive Matcher */}
       <div className="glass-panel" style={{ padding: '24px', marginBottom: '28px' }}>
-        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Search size={18} color="#60a5fa" /> Test Related-Issue Matching Pipeline
         </h3>
 
@@ -110,12 +110,12 @@ export default function RelatedComplaintsScreen({ onNavigate, onSelectComplaint 
 
         {/* Results Grid */}
         <div>
-          <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#cbd5e1', marginBottom: '12px' }}>
+          <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '12px' }}>
             Historical Matches Found ({matches.length})
           </h4>
 
           {matches.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '30px', color: '#64748b' }}>
+            <div style={{ textAlign: 'center', padding: '30px', color: 'var(--text-dim)' }}>
               No related issues detected above similarity threshold.
             </div>
           ) : (
@@ -126,8 +126,8 @@ export default function RelatedComplaintsScreen({ onNavigate, onSelectComplaint 
                   <div
                     key={idx}
                     style={{
-                      background: 'rgba(15, 23, 42, 0.6)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      background: 'var(--panel-bg)',
+                      border: '1px solid var(--border-color)',
                       borderRadius: '12px',
                       padding: '16px 20px',
                       display: 'flex',
@@ -137,7 +137,7 @@ export default function RelatedComplaintsScreen({ onNavigate, onSelectComplaint 
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#60a5fa', fontSize: '0.85rem' }}>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--primary-light)', fontSize: '0.85rem' }}>
                           {m.existing_complaint_id}
                         </span>
                         <span className={`badge ${badge.class}`}>{badge.label}</span>
@@ -145,24 +145,24 @@ export default function RelatedComplaintsScreen({ onNavigate, onSelectComplaint 
                       </div>
 
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '0.82rem', color: '#94a3b8' }}>Composite Match:</span>
-                        <span style={{ fontSize: '1rem', fontWeight: 800, color: '#34d399' }}>
+                        <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Composite Match:</span>
+                        <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--accent-green)' }}>
                           {(m.composite_score * 100).toFixed(1)}%
                         </span>
                       </div>
                     </div>
 
-                    <p style={{ fontSize: '0.9rem', color: '#f1f5f9', lineHeight: 1.4 }}>
+                    <p style={{ fontSize: '0.92rem', color: 'var(--text-main)', fontWeight: 600, lineHeight: 1.5 }}>
                       "{m.original_text}"
                     </p>
 
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', color: '#94a3b8', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.78rem', color: 'var(--text-muted)', borderTop: '1px solid var(--border-color)', paddingTop: '10px' }}>
                       <div style={{ display: 'flex', gap: '16px' }}>
-                        <span>Location: <strong>{m.location || 'Unspecified'}</strong></span>
-                        <span>Status: <strong>{m.existing_status}</strong></span>
-                        <span>Delta: <strong>{m.days_delta} days</strong></span>
+                        <span>Location: <strong style={{ color: 'var(--text-main)' }}>{m.location || 'Unspecified'}</strong></span>
+                        <span>Status: <strong style={{ color: 'var(--text-main)' }}>{m.existing_status}</strong></span>
+                        <span>Delta: <strong style={{ color: 'var(--text-main)' }}>{m.days_delta} days</strong></span>
                       </div>
-                      <div style={{ color: '#38bdf8', fontStyle: 'italic' }}>
+                      <div style={{ color: 'var(--secondary)', fontStyle: 'italic', fontWeight: 600 }}>
                         {m.rationale}
                       </div>
                     </div>
@@ -176,12 +176,12 @@ export default function RelatedComplaintsScreen({ onNavigate, onSelectComplaint 
 
       {/* Issue Groups Cluster View */}
       <div className="glass-panel" style={{ padding: '24px' }}>
-        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#fff', marginBottom: '14px' }}>
+        <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '14px' }}>
           Active Clustered Issue Groups
         </h3>
 
         {issueGroups.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '30px', color: '#64748b' }}>
+          <div style={{ textAlign: 'center', padding: '30px', color: 'var(--text-dim)' }}>
             No issue groups formed yet. When citizens submit related complaints, clusters form automatically.
           </div>
         ) : (
@@ -202,19 +202,19 @@ export default function RelatedComplaintsScreen({ onNavigate, onSelectComplaint 
               <tbody>
                 {issueGroups.map(grp => (
                   <tr key={grp.group_id}>
-                    <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#60a5fa' }}>
+                    <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--primary-light)' }}>
                       {grp.group_id}
                     </td>
-                    <td style={{ fontWeight: 600, color: '#fff' }}>{grp.title}</td>
+                    <td style={{ fontWeight: 600, color: 'var(--text-main)' }}>{grp.title}</td>
                     <td><span className="badge badge-purple">{grp.category}</span></td>
-                    <td style={{ color: '#94a3b8' }}>{grp.location}</td>
-                    <td style={{ fontWeight: 700, color: '#34d399' }}>{grp.complaint_ids?.length || 0}</td>
+                    <td style={{ color: 'var(--text-muted)' }}>{grp.location}</td>
+                    <td style={{ fontWeight: 700, color: 'var(--accent-green)' }}>{grp.complaint_ids?.length || 0}</td>
                     <td>
                       <span className={`badge ${getRelationBadge(grp.relation_type).class}`}>
                         {grp.relation_type}
                       </span>
                     </td>
-                    <td style={{ fontFamily: 'var(--font-mono)', color: '#38bdf8' }}>
+                    <td style={{ fontFamily: 'var(--font-mono)', color: 'var(--secondary)' }}>
                       {(grp.similarity_score * 100).toFixed(1)}%
                     </td>
                     <td>
@@ -242,3 +242,4 @@ export default function RelatedComplaintsScreen({ onNavigate, onSelectComplaint 
     </div>
   );
 }
+

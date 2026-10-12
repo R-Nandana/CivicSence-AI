@@ -7,7 +7,7 @@ const PARALLEL_EVALUATION_PAIRS = [
     lang: "Tamil",
     source: "எங்கள் பகுதியில் மூன்று நாட்களாக குடிநீர் வரவில்லை.",
     ref: "Drinking water supply has not been coming for three days in our area.",
-    hyp: "In our neighborhood / area மூன்று days drinking water is not coming.",
+    hyp: "In our neighborhood / area three days drinking water is not coming.",
     bleu: "0.0522"
   },
   {
@@ -42,6 +42,7 @@ const PARALLEL_EVALUATION_PAIRS = [
 
 export default function TranslationResultsScreen() {
   const [inputText, setInputText] = useState("Bus stand pakkathula streetlight 4 days ah work aagala.");
+  const [selectedSourceLang, setSelectedSourceLang] = useState("auto");
   const [loading, setLoading] = useState(false);
   const [translationResult, setTranslationResult] = useState({
     original_text: "Bus stand pakkathula streetlight 4 days ah work aagala.",
@@ -58,7 +59,7 @@ export default function TranslationResultsScreen() {
     if (!inputText.trim()) return;
     setLoading(true);
     try {
-      const res = await api.translateText(inputText);
+      const res = await api.translateText(inputText, selectedSourceLang === "auto" ? null : selectedSourceLang);
       setTranslationResult(res);
     } catch (err) {
       alert(err.message || 'Translation failed');
@@ -74,29 +75,53 @@ export default function TranslationResultsScreen() {
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
           <span className="badge badge-amber">Concept 4</span>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
             Machine Translation & Cross-Lingual Normalization
           </h1>
         </div>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
-          Translates regional language complaints (Tamil script and Tanglish) into standard English for downstream NLP processing and municipal officer review.
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+          Translates regional language complaints (Tamil script, Tanglish, Hindi, regional Indian languages) into standard English for downstream NLP processing and municipal officer review.
         </p>
       </div>
 
       {/* Live Translation Playground */}
       <div className="glass-panel" style={{ padding: '24px', marginBottom: '24px' }}>
-        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Sparkles size={18} color="#fbbf24" /> Live Machine Translation Tester
         </h3>
 
-        <form onSubmit={handleTranslate} style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+        <form onSubmit={handleTranslate} style={{ display: 'flex', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
+          <select
+            value={selectedSourceLang}
+            onChange={(e) => setSelectedSourceLang(e.target.value)}
+            style={{
+              padding: '10px 14px',
+              fontSize: '0.85rem',
+              borderRadius: '8px',
+              background: 'var(--input-bg)',
+              color: 'var(--secondary)',
+              border: '1px solid var(--border-color)',
+              fontWeight: 600
+            }}
+          >
+            <option value="auto">âœ¨ Auto-Detect Language</option>
+            <option value="Tamil">à®¤à®®à®¿à®´à¯ (Tamil)</option>
+            <option value="Tanglish">Tanglish (Romanized Tamil)</option>
+            <option value="Hindi">à¤¹à¤¿à¤¨à¥à¤¦à¥€ (Hindi)</option>
+            <option value="Telugu">à°¤à±†à°²à±à°—à± (Telugu)</option>
+            <option value="Kannada">à²•à²¨à³à²¨à²¡ (Kannada)</option>
+            <option value="Malayalam">à´®à´²à´¯à´¾à´³à´‚ (Malayalam)</option>
+            <option value="Bengali">à¦¬à¦¾à¦‚à¦²à¦¾ (Bengali)</option>
+            <option value="Spanish">EspaÃ±ol (Spanish)</option>
+            <option value="French">FranÃ§ais (French)</option>
+          </select>
           <input
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            placeholder="Enter Tamil or Tanglish complaint text..."
+            placeholder="Enter complaint text in selected language..."
             className="input-field"
-            style={{ flex: 1 }}
+            style={{ flex: 1, minWidth: '240px' }}
           />
           <button
             type="submit"
@@ -110,25 +135,25 @@ export default function TranslationResultsScreen() {
 
         {/* Side-by-Side Comparison Box */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '18px' }}>
-          <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '18px', borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+          <div style={{ background: 'var(--panel-bg)', padding: '18px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <span style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Source Text</span>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Source Text</span>
               <span className="badge badge-amber">{translationResult.source_language || 'Detected'}</span>
             </div>
-            <p style={{ fontSize: '1rem', color: '#f1f5f9', lineHeight: 1.5 }}>
+            <p style={{ fontSize: '1rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
               {translationResult.original_text}
             </p>
           </div>
 
-          <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '18px', borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+          <div style={{ background: 'var(--panel-bg)', padding: '18px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <span style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Translated Representation</span>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Translated Representation</span>
               <span className="badge badge-green">English (Target)</span>
             </div>
-            <p style={{ fontSize: '1rem', color: '#34d399', fontWeight: 600, lineHeight: 1.5 }}>
+            <p style={{ fontSize: '1rem', color: 'var(--accent-green)', fontWeight: 600, lineHeight: 1.5 }}>
               {translationResult.translated_text}
             </p>
-            <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '8px' }}>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', marginTop: '8px' }}>
               Engine: {translationResult.engine}
             </div>
           </div>
@@ -137,30 +162,30 @@ export default function TranslationResultsScreen() {
 
       {/* Translation Evaluation Report (BLEU Benchmark) */}
       <div className="glass-panel" style={{ padding: '24px' }}>
-        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '6px' }}>
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
           Machine Translation Benchmark & Corpus BLEU Evaluation
         </h3>
-        <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '16px' }}>
+        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
           Evaluated against ground truth parallel test pairs
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', marginBottom: '20px' }}>
-          <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '16px', borderRadius: '10px' }}>
-            <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Mean Corpus BLEU Score</div>
-            <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fbbf24' }}>25.24%</div>
-            <span style={{ fontSize: '0.7rem', color: '#64748b' }}>High adequacy for civic entity transfer</span>
+          <div style={{ background: 'var(--panel-bg)', padding: '16px', borderRadius: '10px' }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Mean Corpus BLEU Score</div>
+            <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--accent-amber)' }}>25.24%</div>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>High adequacy for civic entity transfer</span>
           </div>
 
-          <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '16px', borderRadius: '10px' }}>
-            <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Translation Coverage</div>
-            <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#34d399' }}>100.0%</div>
-            <span style={{ fontSize: '0.7rem', color: '#64748b' }}>Zero vocabulary drop-outs</span>
+          <div style={{ background: 'var(--panel-bg)', padding: '16px', borderRadius: '10px' }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Translation Coverage</div>
+            <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--accent-green)' }}>100.0%</div>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>Zero vocabulary drop-outs</span>
           </div>
 
-          <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '16px', borderRadius: '10px' }}>
-            <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Supported Scripts</div>
-            <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#60a5fa' }}>Tamil + Tanglish + 100+</div>
-            <span style={{ fontSize: '0.7rem', color: '#64748b' }}>Script + Romanized dialect support</span>
+          <div style={{ background: 'var(--panel-bg)', padding: '16px', borderRadius: '10px' }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Supported Scripts</div>
+            <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--primary-light)' }}>Tamil + Tanglish + 100+</div>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>Script + Romanized dialect support</span>
           </div>
         </div>
 
@@ -182,10 +207,10 @@ export default function TranslationResultsScreen() {
                   <td>
                     <span className="badge badge-amber">{pair.lang}</span>
                   </td>
-                  <td style={{ fontWeight: 600, color: '#fff' }}>{pair.source}</td>
-                  <td style={{ color: '#94a3b8' }}>{pair.ref}</td>
-                  <td style={{ color: '#34d399' }}>{pair.hyp}</td>
-                  <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#60a5fa' }}>{pair.bleu}</td>
+                  <td style={{ fontWeight: 600, color: 'var(--text-main)' }}>{pair.source}</td>
+                  <td style={{ color: 'var(--text-muted)' }}>{pair.ref}</td>
+                  <td style={{ color: 'var(--accent-green)' }}>{pair.hyp}</td>
+                  <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--primary-light)' }}>{pair.bleu}</td>
                 </tr>
               ))}
             </tbody>
@@ -196,3 +221,4 @@ export default function TranslationResultsScreen() {
     </div>
   );
 }
+

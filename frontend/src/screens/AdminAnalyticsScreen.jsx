@@ -53,11 +53,11 @@ export default function AdminAnalyticsScreen() {
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
             <span className="badge badge-blue">Admin Operations</span>
-            <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+            <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
               Municipal Governance & AI Analytics Dashboard
             </h1>
           </div>
-          <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
             Live aggregate KPI metrics computed directly from active database records across all civic complaints, categories, and languages.
           </p>
         </div>
@@ -79,35 +79,35 @@ export default function AdminAnalyticsScreen() {
         marginBottom: '28px'
       }}>
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase' }}>Total Database Complaints</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', marginTop: '4px' }}>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Total Database Complaints</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '4px' }}>
             {stats?.total_complaints || 1044}
           </div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Official records logged</span>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Official records logged</span>
         </div>
 
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase' }}>Citizen Live Submissions</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#60a5fa', marginTop: '4px' }}>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Citizen Live Submissions</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--primary-light)', marginTop: '4px' }}>
             {stats?.user_submitted_count || 12}
           </div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Submitted through portal</span>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Submitted through portal</span>
         </div>
 
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase' }}>NYC 311 ETL Records</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#34d399', marginTop: '4px' }}>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>NYC 311 ETL Records</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-green)', marginTop: '4px' }}>
             {stats?.dataset_count || 1032}
           </div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Open Data ingested</span>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Open Data ingested</span>
         </div>
 
         <div className="glass-panel" style={{ padding: '20px' }}>
-          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase' }}>Officer Validations</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase' }}>Officer Validations</span>
           <div style={{ fontSize: '2rem', fontWeight: 800, color: '#c084fc', marginTop: '4px' }}>
             {stats?.validated_feedback_count || 8}
           </div>
-          <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Retraining candidates</span>
+          <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>Retraining candidates</span>
         </div>
       </div>
 
@@ -116,10 +116,10 @@ export default function AdminAnalyticsScreen() {
         
         {/* Category Breakdown Bar Chart */}
         <div className="glass-panel" style={{ padding: '24px' }}>
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '6px' }}>
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
             Complaint Category Distribution (Database-Ground Truth)
           </h3>
-          <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '16px' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
             Counts across 8 normalized municipal categories
           </p>
 
@@ -129,7 +129,7 @@ export default function AdminAnalyticsScreen() {
                 <XAxis dataKey="name" stroke="#94a3b8" fontSize={10} angle={-25} textAnchor="end" interval={0} />
                 <YAxis stroke="#94a3b8" fontSize={11} />
                 <Tooltip
-                  contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }}
+                  contentStyle={{ background: 'var(--input-bg)', border: '1px solid #334155', borderRadius: '8px' }}
                 />
                 <Bar dataKey="count" radius={[6, 6, 0, 0]}>
                   {categoryData.map((entry, index) => (
@@ -143,24 +143,43 @@ export default function AdminAnalyticsScreen() {
 
         {/* Status Distribution Pie Chart */}
         <div className="glass-panel" style={{ padding: '24px' }}>
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff', marginBottom: '6px' }}>
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '6px' }}>
             Resolution Status Breakdown
           </h3>
-          <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '16px' }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
             Resolution lifecycle stages
           </p>
 
-          <div style={{ width: '100%', height: '320px' }}>
+          <div style={{ width: '100%', height: '360px' }}>
             <ResponsiveContainer>
               <PieChart>
                 <Pie
                   data={statusData}
                   cx="50%"
                   cy="50%"
-                  outerRadius={100}
-                  innerRadius={50}
+                  outerRadius={110}
+                  innerRadius={55}
                   dataKey="count"
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  label={({ cx, cy, midAngle, outerRadius, percent, name }) => {
+                    if (percent < 0.05) return null; // skip tiny slices
+                    const RADIAN = Math.PI / 180;
+                    const radius = outerRadius + 28;
+                    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+                    return (
+                      <text
+                        x={x}
+                        y={y}
+                        fill="var(--text-main)"
+                        textAnchor={x > cx ? 'start' : 'end'}
+                        dominantBaseline="central"
+                        fontSize={12}
+                        fontWeight={600}
+                      >
+                        {`${name}: ${(percent * 100).toFixed(0)}%`}
+                      </text>
+                    );
+                  }}
                   labelLine={false}
                 >
                   {statusData.map((entry, index) => (
@@ -168,7 +187,7 @@ export default function AdminAnalyticsScreen() {
                   ))}
                 </Pie>
                 <Tooltip
-                  contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: '8px' }}
+                  contentStyle={{ background: 'var(--input-bg)', border: '1px solid #334155', borderRadius: '8px' }}
                 />
                 <Legend />
               </PieChart>
@@ -181,3 +200,4 @@ export default function AdminAnalyticsScreen() {
     </div>
   );
 }
+

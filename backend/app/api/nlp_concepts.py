@@ -27,6 +27,7 @@ router = APIRouter(prefix="/nlp", tags=["NLP Concepts"])
 class TranslateRequest(BaseModel):
     text: str
     source_language: Optional[str] = None
+    target_language: Optional[str] = "English"
 
 
 class QARequest(BaseModel):
@@ -51,10 +52,14 @@ class MarketBasketRequest(BaseModel):
 def translate_with_llm(req: TranslateRequest):
     """
     Concept 2 (Enhanced): Universal language detection + translation via Google Gemini.
-    Accepts ANY language (100+) and translates to English.
+    Accepts ANY language (100+) and translates to requested target language (English standard).
     Falls back to deep_translator / rule-based approach if Gemini unavailable.
     """
-    result = llm_multilingual.detect_and_translate(req.text)
+    result = llm_multilingual.detect_and_translate(
+        text=req.text,
+        source_language=req.source_language,
+        target_language=req.target_language or "English"
+    )
     return result
 
 

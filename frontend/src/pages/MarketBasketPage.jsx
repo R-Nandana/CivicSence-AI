@@ -85,7 +85,7 @@ export default function MarketBasketPage() {
             <ShoppingCart size={24} color="#fff" />
           </div>
           <div>
-            <h1 style={{ margin: 0, fontSize: '1.65rem', fontWeight: 800, color: '#fff' }}>Market Basket Analysis</h1>
+            <h1 style={{ margin: 0, fontSize: '1.65rem', fontWeight: 800, color: 'var(--text-main)' }}>Market Basket Analysis</h1>
             <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.85rem' }}>
               Concept 8 — Apriori Association Rule Mining on Civic Complaint Co-occurrences
             </p>
@@ -103,7 +103,7 @@ export default function MarketBasketPage() {
 
       {/* Parameter Controls */}
       <div className="card" style={{ padding: 20, marginBottom: 20 }}>
-        <p style={{ margin: '0 0 14px', fontWeight: 700, color: '#fff', fontSize: '0.9rem' }}>Apriori Parameters</p>
+        <p style={{ margin: '0 0 14px', fontWeight: 700, color: 'var(--text-main)', fontSize: '0.9rem' }}>Apriori Parameters</p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
           {[
             { label: 'Min Support', val: minSupport, set: setMinSupport, min: 0.05, step: 0.05, color: '#f59e0b',
@@ -116,7 +116,7 @@ export default function MarketBasketPage() {
             <div key={label}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
                 <span style={{ fontSize: '0.82rem', fontWeight: 600, color }}>{label}</span>
-                <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#fff' }}>{val.toFixed(2)}</span>
+                <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>{val.toFixed(2)}</span>
               </div>
               <input type="range" min={min} max={0.95} step={step} value={val}
                 onChange={e => set(parseFloat(e.target.value))}
@@ -149,7 +149,7 @@ export default function MarketBasketPage() {
             ].map(({ label, value, icon, color }) => (
               <div key={label} className="card" style={{ padding: 18, textAlign: 'center' }}>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 8, color }}>{icon}</div>
-                <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff' }}>{value}</div>
+                <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)' }}>{value}</div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{label}</div>
                 <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', marginTop: 2 }}>{data.data_source}</div>
               </div>
@@ -170,7 +170,7 @@ export default function MarketBasketPage() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               {/* Top Pairs */}
               <div className="card" style={{ padding: 20 }}>
-                <h3 style={{ margin: '0 0 14px', fontSize: '0.95rem', fontWeight: 700, color: '#fff' }}>
+                <h3 style={{ margin: '0 0 14px', fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-main)' }}>
                   🔗 Top Co-Occurring Pairs
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>

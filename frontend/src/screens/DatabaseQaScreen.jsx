@@ -45,11 +45,11 @@ export default function DatabaseQaScreen({ onNavigate }) {
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
           <span className="badge badge-cyan">Concept 6</span>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff' }}>
+          <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)' }}>
             Database-Grounded Civic Question Answering
           </h1>
         </div>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
           Controlled, verifiable question answering grounded directly in live municipal complaints, evidence records,
           and resolution audit logs. Returns factual natural language explanations alongside the exact supporting database records.
         </p>
@@ -57,7 +57,7 @@ export default function DatabaseQaScreen({ onNavigate }) {
 
       {/* 1-Click Mandated Academic Question Buttons */}
       <div style={{ marginBottom: '20px' }}>
-        <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>
+        <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>
           Mandated Academic Scenarios (1-Click Query)
         </span>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -73,9 +73,9 @@ export default function DatabaseQaScreen({ onNavigate }) {
                 fontSize: '0.8rem',
                 padding: '8px 14px',
                 borderRadius: '8px',
-                borderColor: question === q ? '#06b6d4' : 'rgba(255, 255, 255, 0.1)',
-                background: question === q ? 'rgba(6, 182, 212, 0.15)' : 'rgba(255, 255, 255, 0.04)',
-                color: question === q ? '#22d3ee' : '#cbd5e1'
+                borderColor: question === q ? '#06b6d4' : 'var(--border-color)',
+                background: question === q ? 'rgba(6, 182, 212, 0.15)' : 'var(--panel-bg)',
+                color: question === q ? '#22d3ee' : 'var(--text-muted)'
               }}
             >
               <Sparkles size={13} color="#22d3ee" /> {q}
@@ -120,32 +120,32 @@ export default function DatabaseQaScreen({ onNavigate }) {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '10px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <CheckCircle2 size={18} color="#22d3ee" />
-                <span style={{ fontWeight: 800, color: '#fff', fontSize: '1rem' }}>
+                <span style={{ fontWeight: 800, color: 'var(--text-main)', fontSize: '1rem' }}>
                   Grounded Factual Answer
                 </span>
                 <span className="badge badge-cyan">{response.detected_intent}</span>
               </div>
 
-              <div style={{ display: 'flex', gap: '14px', fontSize: '0.75rem', color: '#94a3b8' }}>
-                <span>Execution Time: <strong style={{ color: '#34d399' }}>{response.execution_time_ms} ms</strong></span>
-                <span>Matched Records: <strong style={{ color: '#60a5fa' }}>{response.matched_record_count}</strong></span>
+              <div style={{ display: 'flex', gap: '14px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                <span>Execution Time: <strong style={{ color: 'var(--accent-green)' }}>{response.execution_time_ms} ms</strong></span>
+                <span>Matched Records: <strong style={{ color: 'var(--primary-light)' }}>{response.matched_record_count}</strong></span>
               </div>
             </div>
 
-            <p style={{ fontSize: '1.1rem', fontWeight: 600, color: '#f1f5f9', lineHeight: 1.6, marginBottom: '16px' }}>
+            <p style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '16px' }}>
               {response.answer}
             </p>
 
             {/* Filter Criteria Pill Container */}
             <div style={{
-              background: 'rgba(15, 23, 42, 0.6)',
+              background: 'var(--panel-bg)',
               padding: '10px 16px',
               borderRadius: '8px',
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
               fontSize: '0.78rem',
-              color: '#94a3b8'
+              color: 'var(--text-muted)'
             }}>
               <Filter size={14} color="#06b6d4" />
               <span>Applied Verified Logic Filters:</span>
@@ -159,10 +159,10 @@ export default function DatabaseQaScreen({ onNavigate }) {
           <div className="glass-panel" style={{ padding: '24px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <div>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#fff' }}>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>
                   Supporting Live Database Records ({response.matched_record_count})
                 </h3>
-                <p style={{ fontSize: '0.78rem', color: '#94a3b8' }}>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
                   Factual records retrieved from database justifying the conversational answer
                 </p>
               </div>
@@ -177,7 +177,7 @@ export default function DatabaseQaScreen({ onNavigate }) {
             </div>
 
             {response.supporting_records?.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '30px', color: '#64748b' }}>
+              <div style={{ textAlign: 'center', padding: '30px', color: 'var(--text-dim)' }}>
                 No direct complaint rows met the exact filter constraints.
               </div>
             ) : (
@@ -196,7 +196,7 @@ export default function DatabaseQaScreen({ onNavigate }) {
                   <tbody>
                     {response.supporting_records.slice(0, 15).map((r, idx) => (
                       <tr key={idx}>
-                        <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#60a5fa', fontSize: '0.8rem' }}>
+                        <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--primary-light)', fontSize: '0.8rem' }}>
                           {r.complaint_id}
                         </td>
                         <td>
@@ -205,13 +205,13 @@ export default function DatabaseQaScreen({ onNavigate }) {
                         <td style={{ maxWidth: '380px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {r.original_text}
                         </td>
-                        <td style={{ color: '#94a3b8', fontSize: '0.82rem' }}>
+                        <td style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>
                           {r.location || 'Unspecified'}
                         </td>
                         <td>
                           <span className="badge badge-blue">{r.status}</span>
                         </td>
-                        <td style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                        <td style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>
                           {r.source}
                         </td>
                       </tr>
@@ -227,3 +227,4 @@ export default function DatabaseQaScreen({ onNavigate }) {
     </div>
   );
 }
+
